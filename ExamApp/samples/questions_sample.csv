@@ -1,0 +1,4 @@
+chapter,question,option1,option2,option3,option4,correct_index
+Basics,Which keyword is used to define a constant in C?,#define,const,static,final,A
+Pointers,What is the correct way to declare a pointer to int?,int *p,int p*,pointer int,ptr int,0
+Loops,Which loop checks condition before executing the body?,for,do-while,switch,goto,1

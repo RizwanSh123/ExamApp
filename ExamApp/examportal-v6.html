@@ -1,0 +1,3686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>NIT Polytechnic,Nagpur</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+/* ══════════════════════════════════════════
+   ExamPortal v6 — Main Stylesheet
+══════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ink:    #0f1117;
+  --bg:     #f1f5fb;
+  --pri:    #1a56db;
+  --pri-d:  #1040b0;
+  --pri-lt: #e8f0fe;
+  --ok:     #0e9f6e;
+  --ok-lt:  #d1fae5;
+  --red:    #e02424;
+  --red-lt: #fde8e8;
+  --ora:    #d97706;
+  --ora-lt: #fef3c7;
+  --pur:    #7c3aed;
+  --pur-lt: #ede9fe;
+  --teal:   #0891b2;
+  --teal-lt:#cffafe;
+  --bd:     #dde3ef;
+  --mu:     #5e6e8a;
+  --sh:     0 2px 18px rgba(0,0,0,.07);
+  --r:      14px;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Animations ─────────────────────────── */
+@keyframes fadeUp   { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+@keyframes pulse    { 0%,100%{box-shadow:0 0 0 0 rgba(224,36,36,.35);}50%{box-shadow:0 0 0 8px rgba(224,36,36,0);} }
+@keyframes mIn      { from{opacity:0;transform:scale(.93) translateY(12px);}to{opacity:1;transform:scale(1) translateY(0);} }
+@keyframes sIn      { from{opacity:0;transform:translateX(28px);}to{opacity:1;transform:translateX(0);} }
+
+/* ── Screens ────────────────────────────── */
+.screen { display:none; min-height:100vh; animation:fadeUp .38s ease both; }
+.screen.active { display:flex; }
+
+/* ══ LANDING ═══════════════════════════════ */
+#s-land {
+  flex-direction:column; align-items:center; justify-content:center;
+  background:linear-gradient(140deg,#060d1f 0%,#0f1e40 50%,#1a3a8a 100%);
+  padding:2rem; position:relative; overflow:hidden;
+}
+#s-land::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:54px 54px;
+}
+#s-land::after {
+  content:''; position:absolute; width:800px; height:800px; border-radius:50%;
+  background:radial-gradient(circle,rgba(79,130,255,.12) 0%,transparent 65%);
+  bottom:-400px; left:50%; transform:translateX(-50%); pointer-events:none;
+}
+.land-chip {
+  font-family:'JetBrains Mono',monospace; font-size:.64rem; letter-spacing:.25em;
+  text-transform:uppercase; color:rgba(255,255,255,.38);
+  border:1px solid rgba(255,255,255,.1); border-radius:100px;
+  padding:.3rem 1rem; margin-bottom:1.4rem; position:relative; z-index:1;
+}
+.land-logo {
+  width:clamp(140px,22vw,240px);
+  height:auto;
+  display:block;
+  margin:0 auto 1rem auto;
+  position:relative;
+  z-index:1;
+  filter:drop-shadow(0 8px 18px rgba(0,0,0,.28));
+}
+.land-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.4rem,4vw,4rem); color:#fff;
+  text-align:center; line-height:1.08; margin-bottom:.65rem; position:relative; z-index:1;
+}
+.land-title em { font-style:italic; color:#7eb3ff; }
+.land-sub {
+  color:rgba(255,255,255,.4); font-size:.96rem; text-align:center;
+  margin-bottom:3rem; max-width:44ch; position:relative; z-index:1;
+}
+.role-cards { display:flex; gap:1.2rem; flex-wrap:wrap; justify-content:center; position:relative; z-index:1; }
+.role-card {
+  background:rgba(255,255,255,.055); backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.11); border-radius:20px;
+  padding:2rem 2.2rem; width:210px; text-align:center; cursor:pointer; transition:all .25s;
+}
+.role-card:hover { transform:translateY(-7px); border-color:rgba(255,255,255,.28); box-shadow:0 22px 52px rgba(0,0,0,.32); }
+.role-icon  { font-size:2.6rem; margin-bottom:.85rem; display:block; }
+.role-name  { font-size:1.12rem; font-weight:700; color:#fff; margin-bottom:.3rem; }
+.role-desc  { font-size:.76rem; color:rgba(255,255,255,.36); line-height:1.5; }
+
+/* ══ AUTH ═══════════════════════════════════ */
+.auth-wrap { flex-direction:column; align-items:center; justify-content:center; background:var(--bg); padding:2rem; }
+.auth-box  {
+  background:#fff; border:1px solid var(--bd); border-radius:22px;
+  padding:2.4rem; width:100%; max-width:420px; box-shadow:var(--sh);
+}
+.auth-back {
+  font-family:'JetBrains Mono',monospace; font-size:.67rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--mu); cursor:pointer;
+  display:inline-flex; align-items:center; gap:.4rem; margin-bottom:1.1rem;
+  background:none; border:none; transition:color .2s;
+}
+.auth-back:hover { color:var(--pri); }
+.auth-title { font-size:1.5rem; font-weight:800; margin-bottom:.2rem; }
+.auth-sub   { font-size:.82rem; color:var(--mu); margin-bottom:1.7rem; }
+
+/* ── Form elements ──────────────────────── */
+.lbl {
+  display:block; font-size:.74rem; font-weight:700; color:var(--mu);
+  margin-bottom:.38rem; letter-spacing:.06em; text-transform:uppercase;
+}
+.inp {
+  width:100%; border:1.5px solid var(--bd); border-radius:10px;
+  background:#fff; color:var(--ink); font-family:'Outfit',sans-serif;
+  font-size:.92rem; padding:.7rem 1rem; outline:none; transition:border-color .2s,box-shadow .2s;
+}
+.inp:focus { border-color:var(--pri); box-shadow:0 0 0 3px rgba(26,86,219,.1); }
+select.inp option { background:#fff; }
+.fld    { margin-bottom:1rem; }
+.row2   { display:grid; grid-template-columns:1fr 1fr; gap:.85rem; }
+.row3   { display:grid; grid-template-columns:1fr 1fr 1fr; gap:.7rem; }
+
+.btn-main {
+  width:100%; background:var(--pri); color:#fff; border:none; border-radius:10px;
+  padding:.85rem; font-family:'Outfit',sans-serif; font-size:.96rem; font-weight:700;
+  cursor:pointer; transition:background .2s,transform .15s,box-shadow .2s; margin-top:.4rem;
+}
+.btn-main:hover { background:var(--pri-d); transform:translateY(-2px); box-shadow:0 8px 22px rgba(26,86,219,.28); }
+.err { background:var(--red-lt); color:var(--red); border-radius:8px; padding:.6rem 1rem; font-size:.8rem; margin-top:.7rem; display:none; }
+
+/* ══ ADMIN / FACULTY NAV ═════════════════════ */
+#s-admin, #s-faculty { flex-direction:column; background:var(--bg); }
+.anav {
+  background:#fff; border-bottom:1px solid var(--bd);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:.78rem 1.8rem; position:sticky; top:0; z-index:200; gap:.8rem; flex-wrap:wrap;
+}
+.abrand       { font-size:1.1rem; font-weight:800; color:var(--pri); display:flex; align-items:center; gap:.45rem; }
+.abrand-dot   { width:8px; height:8px; background:var(--red); border-radius:50%; }
+.atabs        { display:flex; gap:.18rem; background:var(--bg); border-radius:10px; padding:.24rem; flex-wrap:wrap; }
+.tbtn         { padding:.44rem .9rem; border-radius:7px; border:none; font-family:'Outfit',sans-serif; font-size:.8rem; font-weight:600; cursor:pointer; background:transparent; color:var(--mu); transition:all .2s; white-space:nowrap; }
+.tbtn.active  { background:#fff; color:var(--pri); box-shadow:0 2px 8px rgba(0,0,0,.08); }
+.nav-right    { display:flex; align-items:center; gap:.7rem; }
+.paper-tag    { font-size:.7rem; font-family:'JetBrains Mono',monospace; background:var(--pri-lt); color:var(--pri); padding:.26rem .75rem; border-radius:100px; font-weight:600; }
+.fac-tag      { background:var(--pur-lt); color:var(--pur); }
+.nav-logout   { font-size:.76rem; color:var(--mu); cursor:pointer; background:none; border:none; font-family:'Outfit',sans-serif; font-weight:600; transition:color .2s; }
+.nav-logout:hover { color:var(--red); }
+.abody        { padding:1.8rem; max-width:1180px; margin:0 auto; width:100%; }
+.apanel       { display:none; }
+.apanel.active{ display:block; animation:fadeUp .3s ease both; }
+
+/* ── Page Header ────────────────────────── */
+.pg-hd    { display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:.8rem; margin-bottom:1.6rem; }
+.pg-title { font-size:1.35rem; font-weight:800; }
+.pg-sub   { font-size:.8rem; color:var(--mu); margin-top:.18rem; }
+
+/* ── Cards / Tables ─────────────────────── */
+.card       { background:#fff; border:1px solid var(--bd); border-radius:var(--r); padding:1.5rem 1.7rem; margin-bottom:1.2rem; box-shadow:var(--sh); }
+.card-title { font-size:.9rem; font-weight:700; margin-bottom:1rem; color:var(--pri); display:flex; align-items:center; gap:.4rem; }
+.tbl-wrap   { overflow-x:auto; border-radius:12px; border:1px solid var(--bd); }
+table       { width:100%; border-collapse:collapse; background:#fff; font-size:.81rem; }
+th          { background:var(--bg); color:var(--mu); font-size:.65rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:.7rem 1rem; text-align:left; white-space:nowrap; border-bottom:1px solid var(--bd); }
+td          { padding:.7rem 1rem; border-bottom:1px solid var(--bd); white-space:nowrap; }
+tr:last-child td { border-bottom:none; }
+tr:hover td { background:#f8faff; }
+
+/* ── Badges ─────────────────────────────── */
+.gbadge    { display:inline-flex; align-items:center; justify-content:center; padding:.18rem .6rem; border-radius:100px; font-size:.69rem; font-weight:700; }
+.gA        { background:var(--ok-lt); color:var(--ok); }
+.gB        { background:#e0f2fe; color:#0369a1; }
+.gC        { background:var(--ora-lt); color:var(--ora); }
+.gF        { background:var(--red-lt); color:var(--red); }
+.badge     { display:inline-flex; align-items:center; justify-content:center; padding:.18rem .6rem; border-radius:100px; font-size:.69rem; font-weight:700; }
+.badge-ok  { background:var(--ok-lt); color:var(--ok); }
+.badge-red { background:var(--red-lt); color:var(--red); }
+.badge-pur { background:var(--pur-lt); color:var(--pur); }
+.badge-teal{ background:var(--teal-lt); color:var(--teal); }
+.badge-ora { background:var(--ora-lt); color:var(--ora); }
+
+/* ── Buttons ────────────────────────────── */
+.btn       { display:inline-flex; align-items:center; gap:.35rem; border:none; border-radius:8px; padding:.55rem 1.1rem; font-family:'Outfit',sans-serif; font-size:.82rem; font-weight:700; cursor:pointer; transition:all .2s; }
+.btn-pri   { background:var(--pri); color:#fff; }
+.btn-pri:hover  { background:var(--pri-d); transform:translateY(-1px); }
+.btn-ok    { background:var(--ok); color:#fff; }
+.btn-ok:hover   { background:#0a8060; transform:translateY(-1px); }
+.btn-red   { background:var(--red-lt); color:var(--red); border:1.5px solid currentColor; }
+.btn-red:hover  { background:var(--red); color:#fff; }
+.btn-pur   { background:var(--pur-lt); color:var(--pur); border:1.5px solid currentColor; }
+.btn-pur:hover  { background:var(--pur); color:#fff; }
+.btn-ghost { background:var(--bg); border:1.5px solid var(--bd); color:var(--ink); }
+.btn-ghost:hover{ border-color:var(--mu); }
+.btn-sm    { padding:.35rem .75rem; font-size:.74rem; }
+.btn-icon  { background:none; border:none; cursor:pointer; padding:.28rem .35rem; border-radius:6px; font-size:.88rem; transition:all .2s; }
+.btn-icon:hover { background:var(--bg); }
+
+/* ── Stats mini ─────────────────────────── */
+.stats-mini { display:grid; grid-template-columns:repeat(4,1fr); gap:.9rem; margin-bottom:1.3rem; }
+.sm         { background:#fff; border:1px solid var(--bd); border-radius:12px; padding:.95rem 1.1rem; box-shadow:var(--sh); }
+.sm .sv     { font-size:1.6rem; font-weight:800; margin-bottom:.1rem; }
+.sm .sk     { font-size:.66rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--mu); }
+.sm-ok  .sv { color:var(--ok); }
+.sm-red .sv { color:var(--red); }
+.sm-pri .sv { color:var(--pri); }
+.sm-pur .sv { color:var(--pur); }
+
+/* ── Toggle ─────────────────────────────── */
+.toggle   { position:relative; width:42px; height:23px; cursor:pointer; flex-shrink:0; }
+.toggle input { opacity:0; width:0; height:0; }
+.tsl      { position:absolute; inset:0; background:var(--bd); border-radius:100px; transition:.3s; }
+.tsl::before { content:''; position:absolute; width:17px; height:17px; left:3px; bottom:3px; background:#fff; border-radius:50%; transition:.3s; box-shadow:0 1px 4px rgba(0,0,0,.15); }
+.toggle input:checked+.tsl { background:var(--ok); }
+.toggle input:checked+.tsl::before { transform:translateX(19px); }
+.trow     { display:flex; align-items:center; justify-content:space-between; padding:.78rem 0; border-bottom:1px solid var(--bd); }
+.trow:last-child { border-bottom:none; padding-bottom:0; }
+.trow .tl { font-size:.88rem; font-weight:600; }
+.trow .td { font-size:.73rem; color:var(--mu); margin-top:.1rem; }
+
+/* ── Toolbar / Filter ───────────────────── */
+.um-toolbar { display:flex; gap:.6rem; align-items:center; margin-bottom:1.1rem; flex-wrap:wrap; }
+.um-search  { border:1.5px solid var(--bd); border-radius:8px; padding:.4rem .8rem; font-family:'Outfit',sans-serif; font-size:.8rem; outline:none; min-width:200px; }
+.um-search:focus { border-color:var(--pri); }
+.filter-row { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:1rem; }
+.filter-row select, .filter-row input {
+  border:1.5px solid var(--bd); border-radius:8px;
+  padding:.38rem .72rem; font-family:'Outfit',sans-serif; font-size:.78rem; outline:none; background:#fff;
+}
+.filter-row input { min-width:190px; }
+.fsel { border:1.5px solid var(--bd); border-radius:8px; padding:.38rem .72rem; font-family:'Outfit',sans-serif; font-size:.78rem; outline:none; background:#fff; }
+
+/* ── Dept tags ──────────────────────────── */
+.tag-dept     { display:inline-block; background:var(--pri-lt); color:var(--pri); border-radius:100px; padding:.15rem .6rem; font-size:.68rem; font-weight:600; }
+.tag-dept.EE  { background:#fef3c7; color:#92400e; }
+.tag-dept.ME  { background:#d1fae5; color:#065f46; }
+.tag-dept.CE  { background:#e0f2fe; color:#0369a1; }
+.tag-dept.ELE { background:#ede9fe; color:#5b21b6; }
+.tag-dept.CV  { background:#fce7f3; color:#9d174d; }
+
+/* ══ PAPER BANK ════════════════════════════ */
+.paper-bank-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem; margin-bottom:1.5rem; }
+.paper-bank-card {
+  background:#fff; border:1.5px solid var(--bd); border-radius:14px;
+  padding:1.2rem 1.4rem; transition:all .2s; position:relative;
+}
+.paper-bank-card:hover { border-color:var(--pri); box-shadow:var(--sh); }
+.paper-bank-card.active-paper { border-color:var(--ok); background:var(--ok-lt); }
+.pb-dept   { font-size:.67rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--mu); margin-bottom:.3rem; }
+.pb-subj   { font-size:1rem; font-weight:800; color:var(--ink); margin-bottom:.5rem; }
+.pb-meta   { display:flex; gap:.5rem; flex-wrap:wrap; }
+.pb-actions{ display:flex; gap:.4rem; margin-top:.9rem; }
+
+/* ── No paper notice ────────────────────── */
+.no-paper { background:#fff; border:2px dashed var(--bd); border-radius:14px; padding:2.4rem; text-align:center; margin-bottom:1.4rem; }
+
+/* ══ WIZARD ════════════════════════════════ */
+#s-wizard { flex-direction:column; align-items:center; justify-content:center; background:var(--bg); padding:2rem; }
+.wiz-box  { background:#fff; border:1px solid var(--bd); border-radius:24px; padding:2.6rem 2.4rem; width:100%; max-width:560px; box-shadow:var(--sh); }
+.wsteps   { display:flex; align-items:center; gap:.45rem; margin-bottom:1.5rem; }
+.wst      { width:27px; height:27px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.7rem; font-weight:700; border:2px solid var(--bd); color:var(--mu); transition:all .3s; flex-shrink:0; }
+.wst.done { background:var(--ok); border-color:var(--ok); color:#fff; }
+.wst.active{background:var(--pri); border-color:var(--pri); color:#fff; }
+.wline    { flex:1; height:2px; background:var(--bd); border-radius:2px; transition:background .3s; }
+.wline.done{background:var(--ok); }
+.wiz-title{ font-size:1.45rem; font-weight:800; margin-bottom:.18rem; }
+.wiz-sub  { font-size:.81rem; color:var(--mu); margin-bottom:1.4rem; }
+.wpage    { display:none; animation:sIn .3s ease both; }
+.wpage.active { display:block; }
+.dept-grid{ display:grid; grid-template-columns:1fr 1fr; gap:.8rem; }
+.dept-card{ border:2px solid var(--bd); border-radius:12px; padding:1rem; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:.7rem; position:relative; }
+.dept-card:hover { border-color:var(--pri); background:var(--pri-lt); }
+.dept-card.sel   { border-color:var(--pri); background:var(--pri-lt); }
+.dept-card.sel::after { content:'✓'; position:absolute; top:.45rem; right:.55rem; width:17px; height:17px; background:var(--pri); color:#fff; border-radius:50%; font-size:.62rem; display:flex; align-items:center; justify-content:center; font-weight:700; }
+.dept-icon { font-size:1.5rem; flex-shrink:0; }
+.dept-name { font-size:.84rem; font-weight:700; line-height:1.3; }
+.sub-pick-grid { display:grid; grid-template-columns:1fr 1fr; gap:.55rem; max-height:240px; overflow-y:auto; }
+.sub-chip  { border:2px solid var(--bd); border-radius:9px; padding:.62rem .85rem; font-size:.83rem; font-weight:600; cursor:pointer; transition:all .2s; text-align:center; }
+.sub-chip:hover { border-color:var(--pri); color:var(--pri); }
+.sub-chip.sel   { border-color:var(--pri); background:var(--pri-lt); color:var(--pri); }
+.cfg-row  { background:var(--bg); border:1px solid var(--bd); border-radius:11px; padding:1rem 1.2rem; margin-bottom:.7rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+.cfg-label{ font-size:.88rem; font-weight:600; }
+.cfg-desc { font-size:.72rem; color:var(--mu); margin-top:.1rem; }
+.cfg-ctrl { display:flex; align-items:center; gap:.45rem; }
+.cfg-ctrl input { width:85px; text-align:center; border:1.5px solid var(--bd); border-radius:8px; padding:.42rem .55rem; font-family:'Outfit',sans-serif; font-size:.92rem; font-weight:700; outline:none; transition:border-color .2s; }
+.cfg-ctrl input:focus { border-color:var(--pri); }
+.calc-disp{ font-size:1rem; font-weight:800; color:var(--pri); min-width:55px; text-align:right; }
+.wiz-nav  { display:flex; justify-content:space-between; align-items:center; margin-top:1.8rem; gap:.8rem; }
+.btn-wb   { background:var(--bg); border:1.5px solid var(--bd); color:var(--ink); border-radius:9px; padding:.65rem 1.3rem; font-family:'Outfit',sans-serif; font-size:.85rem; font-weight:600; cursor:pointer; }
+.btn-wn   { background:var(--pri); color:#fff; border:none; border-radius:9px; padding:.65rem 1.5rem; font-family:'Outfit',sans-serif; font-size:.85rem; font-weight:700; cursor:pointer; transition:all .2s; }
+.btn-wn:hover    { background:var(--pri-d); }
+.btn-wn:disabled { opacity:.38; cursor:not-allowed; }
+.manage-sub-btn  { width:100%; background:none; border:1.5px dashed var(--bd); border-radius:9px; padding:.6rem; font-size:.77rem; font-weight:600; color:var(--mu); cursor:pointer; display:flex; align-items:center; justify-content:center; gap:.4rem; margin-top:.6rem; transition:all .2s; }
+.manage-sub-btn:hover { border-color:var(--pri); color:var(--pri); }
+
+/* ══ QUESTION BANK UI ══════════════════════ */
+.pib      { background:linear-gradient(135deg,var(--pri-lt),#eef2ff); border:1px solid rgba(26,86,219,.14); border-radius:12px; padding:.95rem 1.3rem; margin-bottom:1.6rem; display:flex; flex-wrap:wrap; gap:1rem; align-items:center; }
+.pib-item { display:flex; flex-direction:column; gap:.08rem; }
+.pib-lbl  { font-size:.62rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--pri); opacity:.7; }
+.pib-val  { font-size:.9rem; font-weight:700; color:var(--pri); }
+.pib-div  { width:1px; background:rgba(26,86,219,.14); align-self:stretch; }
+.btn-change { margin-left:auto; background:#fff; border:1.5px solid rgba(26,86,219,.22); color:var(--pri); border-radius:8px; padding:.4rem .9rem; font-family:'Outfit',sans-serif; font-size:.76rem; font-weight:700; cursor:pointer; transition:all .2s; }
+.btn-change:hover { background:var(--pri); color:#fff; }
+.addq-card  { background:#fff; border:1px solid var(--bd); border-radius:var(--r); padding:1.6rem; margin-bottom:1.6rem; box-shadow:var(--sh); }
+.addq-title { font-size:.94rem; font-weight:700; margin-bottom:1.1rem; display:flex; align-items:center; gap:.5rem; }
+.addq-icon  { width:27px; height:27px; background:var(--pri-lt); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:.88rem; }
+.opts-grid  { display:grid; grid-template-columns:1fr 1fr; gap:.65rem; margin-bottom:.7rem; }
+.opt-wrap   { display:flex; align-items:center; gap:.4rem; }
+.opt-lbl    { width:25px; height:25px; min-width:25px; background:var(--bg); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:.7rem; font-weight:700; color:var(--mu); }
+.qform-foot { display:flex; align-items:flex-end; gap:.9rem; flex-wrap:wrap; }
+.qcnt       { display:inline-flex; background:var(--pri-lt); color:var(--pri); border-radius:100px; padding:.26rem .85rem; font-size:.75rem; font-weight:700; white-space:nowrap; }
+.qcnt.full  { background:var(--ok-lt); color:var(--ok); }
+.q-item     { background:#fff; border:1px solid var(--bd); border-radius:10px; padding:.88rem 1.1rem; margin-bottom:.5rem; display:flex; align-items:flex-start; gap:.8rem; transition:box-shadow .2s; animation:fadeUp .28s ease both; }
+.q-item:hover { box-shadow:var(--sh); }
+.qi-num     { width:27px; height:27px; min-width:27px; background:var(--pri-lt); border-radius:7px; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:.68rem; font-weight:700; color:var(--pri); }
+.qi-body    { flex:1; }
+.qi-text    { font-size:.9rem; font-weight:600; margin-bottom:.42rem; line-height:1.38; }
+.qi-opts    { display:flex; flex-wrap:wrap; gap:.28rem; }
+.qi-chip    { font-size:.67rem; background:var(--bg); border:1px solid var(--bd); border-radius:5px; padding:.14rem .5rem; color:var(--mu); }
+.qi-chip.correct { background:var(--ok-lt); border-color:var(--ok); color:var(--ok); }
+.qi-actions { display:flex; gap:.25rem; flex-shrink:0; }
+.pool-bar   { display:flex; align-items:center; gap:.6rem; background:var(--ora-lt); border:1px solid #fbbf24; border-radius:9px; padding:.5rem .9rem; margin-bottom:.7rem; font-size:.8rem; font-weight:600; color:var(--ora); }
+.pool-bar.ok{ background:var(--ok-lt); border-color:var(--ok); color:var(--ok); }
+
+/* ══ SCHEDULE ══════════════════════════════ */
+.sched-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1rem; }
+.sched-card { background:#fff; border:1.5px solid var(--bd); border-radius:14px; padding:1.3rem 1.5rem; transition:all .2s; }
+.sched-card:hover { border-color:var(--pri); box-shadow:var(--sh); }
+.sched-card.active-sched  { border-color:var(--ok); }
+.sched-card.expired-sched { opacity:.6; }
+.sched-status { display:inline-flex; align-items:center; gap:.3rem; padding:.2rem .65rem; border-radius:100px; font-size:.68rem; font-weight:700; margin-bottom:.75rem; }
+.ss-active   { background:var(--ok-lt); color:var(--ok); }
+.ss-upcoming { background:var(--pri-lt); color:var(--pri); }
+.ss-expired  { background:var(--bd); color:var(--mu); }
+.sched-title { font-size:1rem; font-weight:800; margin-bottom:.2rem; }
+.sched-sub   { font-size:.76rem; color:var(--mu); margin-bottom:.8rem; }
+.sched-meta  { display:flex; flex-direction:column; gap:.3rem; font-size:.76rem; color:var(--mu); }
+.sched-meta span { display:flex; align-items:center; gap:.35rem; }
+.sched-actions { display:flex; gap:.4rem; margin-top:.9rem; }
+
+/* ══ STUDENT EXAM SCREEN ════════════════════ */
+#s-exam { flex-direction:column; background:var(--bg); }
+.etop   { background:#fff; border-bottom:1px solid var(--bd); display:flex; align-items:center; justify-content:space-between; padding:.7rem 1.3rem; position:sticky; top:0; z-index:100; gap:.9rem; flex-wrap:wrap; }
+.epname { font-size:.9rem; font-weight:700; }
+.esinfo { font-size:.68rem; color:var(--mu); font-family:'JetBrains Mono',monospace; }
+.etimer { display:flex; align-items:center; gap:.4rem; font-family:'JetBrains Mono',monospace; font-size:1.15rem; font-weight:700; background:var(--ora-lt); color:var(--ora); padding:.42rem .95rem; border-radius:9px; border:1.5px solid #fbbf24; transition:all .3s; }
+.etimer.danger { background:var(--red-lt); color:var(--red); border-color:var(--red); animation:pulse 1.4s infinite; }
+.epbar  { height:3px; background:var(--bd); }
+.epfill { height:100%; background:linear-gradient(90deg,var(--pri),var(--pur)); transition:width .5s; }
+.ebody  { display:grid; grid-template-columns:200px 1fr; min-height:calc(100vh - 56px); }
+.qsb    { background:#fff; border-right:1px solid var(--bd); padding:.95rem; overflow-y:auto; position:sticky; top:56px; height:calc(100vh - 56px); }
+.sb-title{ font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--mu); margin-bottom:.6rem; }
+.qgrid  { display:grid; grid-template-columns:repeat(8,1fr); gap:.3rem; margin-bottom:.85rem; }
+.qdot   { aspect-ratio:1; border-radius:6px; border:1.5px solid var(--bd); background:var(--bg); cursor:pointer; font-size:.67rem; font-weight:700; color:var(--mu); display:flex; align-items:center; justify-content:center; transition:all .2s; }
+.qdot:hover { border-color:var(--pri); color:var(--pri); }
+.qdot.cur   { background:var(--pri); border-color:var(--pri); color:#fff; }
+.qdot.ans   { background:var(--ok-lt); border-color:var(--ok); color:var(--ok); }
+.qdot.cur.ans{ background:var(--ok); color:#fff; }
+.leg    { display:flex; flex-direction:column; gap:.32rem; }
+.legrow { display:flex; align-items:center; gap:.42rem; font-size:.67rem; color:var(--mu); }
+.legd   { width:11px; height:11px; border-radius:3px; border:1.5px solid; }
+.emain  { padding:1.3rem 1.7rem; max-width:720px; width:100%; }
+.qcard  { background:#fff; border:1px solid var(--bd); border-radius:var(--r); padding:1.6rem 1.8rem; margin-bottom:1rem; box-shadow:var(--sh); animation:fadeUp .28s ease both; }
+.qtag   { font-family:'JetBrains Mono',monospace; font-size:.63rem; letter-spacing:.14em; text-transform:uppercase; color:var(--pri); margin-bottom:.72rem; display:flex; align-items:center; gap:.45rem; }
+.qmbadge{ background:var(--pri-lt); color:var(--pri); border-radius:100px; padding:.11rem .52rem; font-size:.6rem; }
+.qtext  { font-size:1.03rem; font-weight:600; line-height:1.52; margin-bottom:1.2rem; }
+.opts   { display:flex; flex-direction:column; gap:.55rem; }
+.opt    { display:flex; align-items:center; gap:.82rem; padding:.75rem 1rem; border:1.5px solid var(--bd); border-radius:9px; cursor:pointer; background:var(--bg); transition:all .2s; }
+.opt:hover { border-color:rgba(26,86,219,.35); background:#eef3ff; }
+.opt.sel   { border-color:var(--pri); background:var(--pri-lt); }
+.oltr   { width:27px; height:27px; min-width:27px; border-radius:7px; border:1.5px solid var(--bd); background:#fff; display:flex; align-items:center; justify-content:center; font-size:.71rem; font-weight:700; color:var(--mu); transition:all .2s; }
+.opt.sel .oltr { background:var(--pri); border-color:var(--pri); color:#fff; }
+.otext  { font-size:.9rem; }
+.ectrl  { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.7rem; padding-bottom:2rem; }
+.btn-nav{ background:#fff; border:1.5px solid var(--bd); color:var(--ink); border-radius:9px; padding:.6rem 1.25rem; font-family:'Outfit',sans-serif; font-size:.83rem; font-weight:600; cursor:pointer; transition:all .2s; }
+.btn-nav:hover    { border-color:var(--pri); color:var(--pri); }
+.btn-nav:disabled { opacity:.32; cursor:not-allowed; }
+.btn-submit { background:var(--ok); color:#fff; border:none; border-radius:9px; padding:.67rem 1.7rem; font-family:'Outfit',sans-serif; font-size:.88rem; font-weight:700; cursor:pointer; transition:all .2s; }
+.btn-submit:hover { background:#0a8060; box-shadow:0 8px 20px rgba(14,159,110,.24); }
+
+/* ══ RESULT ════════════════════════════════ */
+#s-result { flex-direction:column; align-items:center; justify-content:center; background:var(--bg); padding:2rem; }
+.rcard  { background:#fff; border:1px solid var(--bd); border-radius:24px; padding:2.4rem; width:100%; max-width:480px; text-align:center; box-shadow:0 10px 44px rgba(0,0,0,.1); animation:fadeUp .5s ease both; }
+.rcirc  { width:132px; height:132px; margin:0 auto 1.3rem; position:relative; }
+.rcirc svg { width:100%; height:100%; transform:rotate(-90deg); }
+.rcbg   { fill:none; stroke:var(--bd); stroke-width:9; }
+.rcfill { fill:none; stroke-width:9; stroke-linecap:round; transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1); }
+.rpct   { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:1.85rem; font-weight:800; line-height:1; }
+.rplbl  { font-size:.65rem; font-family:'JetBrains Mono',monospace; color:var(--mu); }
+.rtitle { font-family:'Playfair Display',serif; font-size:1.7rem; margin-bottom:.38rem; }
+.rdetail{ font-size:.8rem; color:var(--mu); margin-bottom:1.5rem; }
+.rstats { display:grid; grid-template-columns:repeat(3,1fr); gap:.7rem; margin-bottom:1.5rem; }
+.rstat  { background:var(--bg); border-radius:10px; padding:.85rem .7rem; }
+.rsv    { font-size:1.5rem; font-weight:800; margin-bottom:.12rem; }
+.rsk    { font-size:.63rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--mu); }
+.rsc .rsv{ color:var(--ok); }
+.rsw .rsv{ color:var(--red); }
+.rss .rsv{ color:var(--ora); }
+.btn-done { background:var(--pri); color:#fff; border:none; border-radius:10px; padding:.85rem 2.4rem; font-family:'Outfit',sans-serif; font-size:.96rem; font-weight:700; cursor:pointer; transition:all .2s; }
+.btn-done:hover { background:var(--pri-d); }
+
+/* ══ CHAPTERS ══════════════════════════════ */
+.chap-list { display:flex; flex-direction:column; gap:.55rem; margin-bottom:.8rem; }
+.chap-row  { display:flex; align-items:center; gap:.6rem; background:var(--bg); border:1.5px solid var(--bd); border-radius:10px; padding:.65rem .9rem; transition:border-color .2s; }
+.chap-row:hover { border-color:var(--pri); }
+.chap-num  { width:24px; height:24px; min-width:24px; background:var(--pri-lt); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:.68rem; font-weight:800; color:var(--pri); }
+.chap-name-inp  { flex:1; border:none; background:transparent; font-family:'Outfit',sans-serif; font-size:.88rem; font-weight:600; outline:none; color:var(--ink); }
+.chap-marks-inp { width:64px; text-align:center; border:1.5px solid var(--bd); border-radius:7px; padding:.3rem .4rem; font-family:'Outfit',sans-serif; font-size:.85rem; font-weight:700; outline:none; transition:border-color .2s; }
+.chap-marks-inp:focus { border-color:var(--pri); }
+.chap-q-disp{ width:55px; text-align:center; font-size:.78rem; font-weight:700; color:var(--mu); background:#fff; border:1.5px dashed var(--bd); border-radius:7px; padding:.28rem .3rem; }
+.chap-q-disp.has { color:var(--ok); border-color:var(--ok); }
+.chap-del  { background:none; border:none; cursor:pointer; padding:.2rem .3rem; border-radius:6px; font-size:.85rem; color:var(--mu); transition:all .2s; }
+.chap-del:hover { background:var(--red-lt); color:var(--red); }
+.chap-total-bar { display:flex; align-items:center; justify-content:space-between; background:var(--pri-lt); border:1px solid rgba(26,86,219,.15); border-radius:9px; padding:.6rem 1rem; font-size:.84rem; font-weight:700; color:var(--pri); margin-top:.5rem; }
+.chap-warn { background:var(--red-lt); border:1px solid var(--red); color:var(--red); border-radius:8px; padding:.5rem .9rem; font-size:.78rem; font-weight:600; margin-top:.4rem; display:none; }
+
+/* ══ MODALS ════════════════════════════════ */
+.moverlay { position:fixed; inset:0; background:rgba(0,0,0,.48); z-index:1000; display:none; align-items:center; justify-content:center; padding:1rem; backdrop-filter:blur(5px); }
+.moverlay.open { display:flex; }
+.mbox     { background:#fff; border-radius:20px; padding:1.9rem; width:100%; box-shadow:0 24px 64px rgba(0,0,0,.2); animation:mIn .3s ease both; }
+.mtitle   { font-size:1.08rem; font-weight:800; margin-bottom:.42rem; }
+.mbody    { font-size:.84rem; color:var(--mu); line-height:1.6; margin-bottom:1.3rem; }
+.mact     { display:flex; gap:.7rem; justify-content:flex-end; margin-top:1.3rem; }
+.btn-mcancel { background:var(--bg); border:1.5px solid var(--bd); color:var(--ink); border-radius:8px; padding:.55rem 1.1rem; font-family:'Outfit',sans-serif; font-size:.82rem; font-weight:600; cursor:pointer; }
+.btn-mok  { background:var(--ok); color:#fff; border:none; border-radius:8px; padding:.55rem 1.2rem; font-family:'Outfit',sans-serif; font-size:.82rem; font-weight:700; cursor:pointer; }
+.btn-mred { background:var(--red); color:#fff; border:none; border-radius:8px; padding:.55rem 1.2rem; font-family:'Outfit',sans-serif; font-size:.82rem; font-weight:700; cursor:pointer; }
+
+.sub-tags { display:flex; flex-wrap:wrap; gap:.38rem; margin-bottom:.5rem; }
+.sub-tag  { display:inline-flex; align-items:center; gap:.32rem; background:var(--pri-lt); color:var(--pri); border-radius:100px; padding:.25rem .68rem; font-size:.74rem; font-weight:600; }
+.sub-tag .rx { background:none; border:none; color:var(--pri); cursor:pointer; font-size:.82rem; opacity:.6; transition:opacity .2s; padding:0; }
+.sub-tag .rx:hover { opacity:1; }
+.add-sub-row { display:flex; gap:.4rem; }
+.add-sub-row input { flex:1; border:1.5px solid var(--bd); border-radius:8px; padding:.4rem .72rem; font-family:'Outfit',sans-serif; font-size:.82rem; outline:none; transition:border-color .2s; }
+.add-sub-row input:focus { border-color:var(--pri); }
+.btn-addsub { background:var(--pri); color:#fff; border:none; border-radius:8px; padding:.4rem .9rem; font-family:'Outfit',sans-serif; font-size:.78rem; font-weight:700; cursor:pointer; }
+.editopts   { display:grid; grid-template-columns:1fr 1fr; gap:.55rem; margin-bottom:.55rem; }
+.dept-checks { display:flex; flex-direction:column; gap:.5rem; margin:.5rem 0; }
+.dept-check-row { display:flex; align-items:center; gap:.55rem; font-size:.88rem; font-weight:500; cursor:pointer; }
+.dept-check-row input { width:16px; height:16px; accent-color:var(--pri); cursor:pointer; }
+
+/* ══ SETTINGS ══════════════════════════════ */
+.scard      { background:#fff; border:1px solid var(--bd); border-radius:var(--r); padding:1.5rem 1.7rem; margin-bottom:1.2rem; box-shadow:var(--sh); }
+.scard-title{ font-size:.9rem; font-weight:700; margin-bottom:1rem; color:var(--pri); display:flex; align-items:center; gap:.4rem; }
+.srow       { display:flex; align-items:center; justify-content:space-between; padding:.76rem 0; border-bottom:1px solid var(--bd); gap:.8rem; flex-wrap:wrap; }
+.srow:last-child { border-bottom:none; padding-bottom:0; }
+.srow .sl   { font-size:.88rem; font-weight:600; }
+.srow .sd   { font-size:.72rem; color:var(--mu); margin-top:.1rem; }
+.srow .sc   { display:flex; align-items:center; gap:.45rem; flex-shrink:0; }
+.srow .sc input, .srow .sc select { border:1.5px solid var(--bd); border-radius:8px; padding:.4rem .68rem; font-family:'Outfit',sans-serif; font-size:.86rem; outline:none; background:#fff; }
+.srow .sc input[type=number] { width:84px; text-align:center; }
+
+/* ══ FACULTY PANEL ═════════════════════════ */
+.fac-header { background:linear-gradient(135deg,var(--pur-lt),#f5f3ff); border:1px solid rgba(124,58,237,.15); border-radius:12px; padding:1.1rem 1.5rem; margin-bottom:1.5rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.8rem; }
+.fac-info-name   { font-size:1.1rem; font-weight:800; color:var(--pur); }
+.fac-info-dept   { font-size:.78rem; color:var(--mu); margin-top:.15rem; }
+.fac-info-access { font-size:.75rem; font-family:'JetBrains Mono',monospace; background:var(--pur-lt); color:var(--pur); padding:.25rem .7rem; border-radius:100px; margin-top:.3rem; display:inline-block; }
+
+/* ══ ANTI-CHEAT OVERLAY ════════════════════ */
+.cheat-overlay {
+  position:fixed; inset:0; background:rgba(10,10,20,.97); z-index:99999;
+  display:none; flex-direction:column; align-items:center; justify-content:center;
+  padding:2rem; text-align:center;
+}
+.cheat-overlay.show { display:flex; }
+.cheat-icon  { font-size:4rem; margin-bottom:1.2rem; }
+.cheat-title { font-size:1.8rem; font-weight:800; color:#fff; margin-bottom:.6rem; }
+.cheat-sub   { font-size:.95rem; color:rgba(255,255,255,.5); max-width:38ch; line-height:1.6; }
+
+/* ══ STUDENT EXAM SELECT SCREEN ════════════ */
+.stu-dash { max-width:680px; margin:0 auto; width:100%; padding:1.5rem; }
+.stu-welcome { background:linear-gradient(135deg,#1a56db,#7c3aed); border-radius:18px; padding:1.5rem 1.8rem; color:#fff; margin-bottom:1.5rem; }
+.stu-exams   { display:flex; flex-direction:column; gap:.8rem; }
+.stu-exam-card { background:#fff; border:1.5px solid var(--bd); border-radius:14px; padding:1.2rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; transition:all .2s; }
+.stu-exam-card:hover { border-color:var(--pri); box-shadow:var(--sh); }
+.stu-exam-card.attempted { opacity:.55; }
+.stu-exam-card.not-started { border-color:var(--bd); }
+.stu-exam-card.live { border-color:var(--ok); }
+.sec-left { flex:1; }
+.sec-subject { font-size:1rem; font-weight:800; margin-bottom:.25rem; }
+.sec-dept    { font-size:.75rem; color:var(--mu); margin-bottom:.5rem; }
+.sec-time    { font-size:.73rem; font-family:'JetBrains Mono',monospace; color:var(--mu); }
+.sec-right   { display:flex; flex-direction:column; align-items:flex-end; gap:.4rem; }
+
+/* ══ EMPTY STATE ═══════════════════════════ */
+.empty    { text-align:center; padding:2.8rem 1rem; color:var(--mu); }
+.empty .ei{ font-size:2.3rem; margin-bottom:.65rem; }
+.empty .et{ font-size:.86rem; }
+
+/* ══ TOAST ══════════════════════════════════ */
+#toast {
+  position:fixed; bottom:1.8rem; right:1.8rem; z-index:9999;
+  background:#1e293b; color:#fff; border-radius:10px; padding:.65rem 1.1rem;
+  font-size:.77rem; font-family:'JetBrains Mono',monospace;
+  opacity:0; transform:translateY(10px); transition:all .3s;
+  pointer-events:none; max-width:285px;
+}
+
+/* ══ RESPONSIVE ════════════════════════════ */
+@media(max-width:700px){
+  .ebody { grid-template-columns:1fr; }
+  .qsb   { position:static; height:auto; border-right:none; border-bottom:1px solid var(--bd); }
+  .qgrid { grid-template-columns:repeat(12,1fr); }
+  .row2,.row3,.opts-grid,.editopts,.dept-grid,.sub-pick-grid { grid-template-columns:1fr; }
+  .abody,.emain { padding:1rem; }
+  .stats-mini   { grid-template-columns:1fr 1fr; }
+  .role-cards   { flex-direction:column; align-items:center; }
+  .role-card    { width:100%; max-width:270px; }
+  .atabs        { flex-wrap:wrap; }
+  .paper-bank-grid,.sched-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- ANTI-CHEAT OVERLAY -->
+<div class="cheat-overlay" id="cheatOverlay">
+  <div class="cheat-icon">🚫</div>
+  <div class="cheat-title">Exam Terminated</div>
+  <div class="cheat-sub">You switched to another tab/window during the exam. Your paper has been auto-submitted as a violation.</div>
+  <div style="margin-top:1.4rem;font-family:'JetBrains Mono',monospace;font-size:.76rem;color:rgba(255,255,255,.3)">Submitting your answers…</div>
+</div>
+
+<!-- ══════════ MODALS ══════════ -->
+
+<!-- Submit exam -->
+<div class="moverlay" id="m-submit">
+  <div class="mbox" style="max-width:390px">
+    <div class="mtitle">📋 Submit Exam?</div>
+    <div class="mbody">Answered <strong id="ansCnt">0</strong> of <strong id="totCnt">0</strong>. Remaining will be skipped.</div>
+    <div class="mact">
+      <button class="btn-mcancel" onclick="closeM('m-submit')">Review</button>
+      <button class="btn-mok" onclick="confirmSubmit()">Submit ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit question -->
+<div class="moverlay" id="m-editq">
+  <div class="mbox" style="max-width:540px">
+    <div class="mtitle">✏️ Edit Question</div>
+    <input type="hidden" id="editQKey"/> <!-- "dept::subject::index" -->
+    <div class="fld"><label class="lbl">Question</label><input class="inp" type="text" id="eqTxt"/></div>
+    <div class="editopts">
+      <div class="opt-wrap"><span class="opt-lbl">A</span><input class="inp" type="text" id="eo0"/></div>
+      <div class="opt-wrap"><span class="opt-lbl">B</span><input class="inp" type="text" id="eo1"/></div>
+      <div class="opt-wrap"><span class="opt-lbl">C</span><input class="inp" type="text" id="eo2"/></div>
+      <div class="opt-wrap"><span class="opt-lbl">D</span><input class="inp" type="text" id="eo3"/></div>
+    </div>
+    <div class="fld"><label class="lbl">Correct Answer</label>
+      <select class="inp" id="eCorr">
+        <option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option>
+      </select>
+    </div>
+    <div class="mact">
+      <button class="btn-mcancel" onclick="closeM('m-editq')">Cancel</button>
+      <button class="btn-mok" onclick="saveEditQ()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Manage subjects -->
+<div class="moverlay" id="m-subjects">
+  <div class="mbox" style="max-width:460px">
+    <div class="mtitle">📚 Manage Subjects — <span id="mSubDeptLabel"></span></div>
+    <div class="sub-tags" id="mSubTags"></div>
+    <div class="add-sub-row">
+      <input class="inp" type="text" id="mSubInp" placeholder="Add subject…" onkeydown="if(event.key==='Enter')addSubM()"/>
+      <button class="btn-addsub" onclick="addSubM()">+ Add</button>
+    </div>
+    <div class="mact"><button class="btn-mok" onclick="closeM('m-subjects')">Done</button></div>
+  </div>
+</div>
+
+<!-- Add/edit faculty -->
+<div class="moverlay" id="m-faculty">
+  <div class="mbox" style="max-width:500px">
+    <div class="mtitle" id="facModalTitle">➕ Add Faculty</div>
+    <input type="hidden" id="facEditId"/>
+    <div class="row2">
+      <div class="fld"><label class="lbl">Faculty Name</label><input class="inp" type="text" id="facName" placeholder="e.g. Dr. Sharma"/></div>
+      <div class="fld"><label class="lbl">Faculty ID</label><input class="inp" type="text" id="facId" placeholder="e.g. FAC001"/></div>
+    </div>
+    <div class="fld"><label class="lbl">Password</label><input class="inp" type="text" id="facPass" placeholder="Set password"/></div>
+    <div class="fld"><label class="lbl">Department Access</label>
+      <div class="dept-checks" id="facDeptChecks">
+        <label class="dept-check-row"><input type="checkbox" value="Electrical Engineering"/> Electrical Engineering</label>
+        <label class="dept-check-row"><input type="checkbox" value="Mechanical Engineering"/> Mechanical Engineering</label>
+        <label class="dept-check-row"><input type="checkbox" value="Computer Engineering"/> Computer Engineering</label>
+        <label class="dept-check-row"><input type="checkbox" value="Electronics Engineering"/> Electronics Engineering</label>
+        <label class="dept-check-row"><input type="checkbox" value="Civil Engineering"/> Civil Engineering</label>
+      </div>
+    </div>
+    <div class="fld"><label class="lbl">Subject Access (comma separated; blank = all)</label>
+      <input class="inp" type="text" id="facSubjects" placeholder="e.g. Mathematics, Physics"/>
+    </div>
+    <div class="mact">
+      <button class="btn-mcancel" onclick="closeM('m-faculty')">Cancel</button>
+      <button class="btn-mok" onclick="saveFaculty()">Save Faculty</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add/edit student -->
+<div class="moverlay" id="m-student">
+  <div class="mbox" style="max-width:540px">
+    <div class="mtitle" id="stuModalTitle">➕ Add Student</div>
+    <input type="hidden" id="stuEditId"/>
+    <div class="row2">
+      <div class="fld"><label class="lbl">Enrollment No.</label><input class="inp" type="text" id="stuMEnroll" placeholder="e.g. 2021CS001"/></div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label class="lbl">Year / Semester</label>
+        <select class="inp" id="stuMYear">
+          <option>1st Year - Sem 1</option><option>1st Year - Sem 2</option>
+          <option>2nd Year - Sem 3</option><option>2nd Year - Sem 4</option>
+          <option>3rd Year - Sem 5</option><option>3rd Year - Sem 6</option>
+          
+        </select>
+      </div>
+      <div class="fld"><label class="lbl">Department</label>
+        <select class="inp" id="stuMBranch">
+          <option>Electrical Engineering</option><option>Mechanical Engineering</option>
+          <option>Computer Engineering</option><option>Electronics Engineering</option>
+          <option>Civil Engineering</option>
+        </select>
+      </div>
+    </div>
+    <div class="mact">
+      <button class="btn-mcancel" onclick="closeM('m-student')">Cancel</button>
+      <button class="btn-mok" onclick="saveStudent()">Save Student</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add/edit schedule -->
+<div class="moverlay" id="m-schedule">
+  <div class="mbox" style="max-width:520px">
+    <div class="mtitle" id="schedModalTitle">📅 Schedule Exam</div>
+    <input type="hidden" id="schedEditId"/>
+    <div class="row2">
+      <div class="fld"><label class="lbl">Department</label>
+        <select class="inp" id="schedDept" onchange="loadSchedSubjects()">
+          <option value="">— Select —</option>
+          <option>Electrical Engineering</option><option>Mechanical Engineering</option>
+          <option>Computer Engineering</option><option>Electronics Engineering</option>
+          <option>Civil Engineering</option>
+        </select>
+      </div>
+      <div class="fld"><label class="lbl">Subject (Paper)</label>
+        <select class="inp" id="schedSubj"></select>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label class="lbl">For Year / Semester</label>
+        <select class="inp" id="schedYear">
+          <option value="">All Students (same dept)</option>
+          <option>1st Year - Sem 1</option><option>1st Year - Sem 2</option>
+          <option>2nd Year - Sem 3</option><option>2nd Year - Sem 4</option>
+          <option>3rd Year - Sem 5</option><option>3rd Year - Sem 6</option>
+         
+        </select>
+      </div>
+      <div class="fld"><label class="lbl">For Section (blank = all)</label>
+        <input class="inp" type="text" id="schedSection" placeholder="e.g. A (blank = all)"/>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="fld"><label class="lbl">Start Date & Time</label>
+        <input class="inp" type="datetime-local" id="schedStart"/>
+      </div>
+      <div class="fld"><label class="lbl">End Date & Time</label>
+        <input class="inp" type="datetime-local" id="schedEnd"/>
+      </div>
+    </div>
+    <div class="fld"><label class="lbl">Exam Title (optional override)</label>
+      <input class="inp" type="text" id="schedTitle" placeholder="Leave blank to use paper title"/>
+    </div>
+    <div id="schedPaperInfo" style="background:var(--pri-lt);border-radius:9px;padding:.7rem 1rem;font-size:.81rem;color:var(--pri);margin-top:.3rem;display:none"></div>
+    <div class="mact">
+      <button class="btn-mcancel" onclick="closeM('m-schedule')">Cancel</button>
+      <button class="btn-mok" onclick="saveSchedule()">💾 Save Schedule</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SCREENS
+══════════════════════════════════════ -->
+
+<!-- LANDING -->
+<div class="screen active" id="s-land">
+  
+  <img class="land-logo" src="images/logo.png" alt="NIT Polytechnic Logo"/>
+  <div class="land-title"><em>NIT Polytechnic, Nagpur</em><br>Online MCQ Examination </div> <br>
+ 
+  <div class="role-cards">
+    <div class="role-card" onclick="showS('s-admin-login')">
+      <span class="role-icon">🔐</span>
+      <div class="role-name">Admin</div>
+      <div class="role-desc">Full control — papers, users, schedules, results</div>
+    </div>
+    <div class="role-card" onclick="showS('s-fac-login')">
+      <span class="role-icon">👨‍🏫</span>
+      <div class="role-name">Faculty</div>
+      <div class="role-desc">View results for assigned dept & subjects</div>
+    </div>
+    <div class="role-card" onclick="showS('s-stu-login')">
+      <span class="role-icon">🎓</span>
+      <div class="role-name">Student</div>
+      <div class="role-desc">Login to see & take your scheduled exams</div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="screen auth-wrap" id="s-admin-login">
+  <div class="auth-box">
+    <button class="auth-back" onclick="showS('s-land')">← Back</button>
+    <div class="auth-title">Admin Login</div>
+    <div class="auth-sub">Full access to manage all exam data.</div>
+    <div class="fld"><label class="lbl">Username</label><input class="inp" type="text" id="aUser" value="admin"/></div>
+    <div class="fld"><label class="lbl">Password</label><input class="inp" type="password" id="aPass" placeholder="••••••" onkeydown="if(event.key==='Enter')adminLogin()"/></div>
+    <button class="btn-main" onclick="adminLogin()">Login as Admin</button>
+    <div class="err" id="aErr">Invalid credentials. Default: admin / admin123</div>
+    <p style="font-size:.7rem;color:var(--mu);margin-top:.9rem;text-align:center">Default: <code style="background:var(--bg);padding:.1rem .4rem;border-radius:4px;font-family:'JetBrains Mono',monospace">admin / admin123</code></p>
+  </div>
+</div>
+
+<!-- FACULTY LOGIN -->
+<div class="screen auth-wrap" id="s-fac-login">
+  <div class="auth-box">
+    <button class="auth-back" onclick="showS('s-land')">← Back</button>
+    <div class="auth-title">Faculty & Sub-Admin Login</div>
+    <div class="auth-sub">Login with Faculty/Sub-Admin ID and password.</div>
+    <div class="fld"><label class="lbl">ID</label><input class="inp" type="text" id="fUser" placeholder="e.g. FAC001 or SUB001"/></div>
+    <div class="fld"><label class="lbl">Password</label><input class="inp" type="password" id="fPass" placeholder="••••••" onkeydown="if(event.key==='Enter')facultyLogin()"/></div>
+    <button class="btn-main" onclick="facultyLogin()">Login as Faculty/Sub-Admin</button>
+    <div class="err" id="fErr">Invalid Faculty/Sub-Admin ID or password.</div>
+  </div>
+</div>
+
+<!-- STUDENT LOGIN -->
+<div class="screen auth-wrap" id="s-stu-login">
+  <div class="auth-box">
+    <button class="auth-back" onclick="showS('s-land')">← Back</button>
+    <div class="auth-title">Student Login</div>
+    <div class="auth-sub">Login with Enrollment No. and password.</div>
+    <div class="fld"><label class="lbl">Enrollment No.</label><input class="inp" type="text" id="sUser" placeholder="e.g. 2021CS001"/></div>
+    <div class="fld"><label class="lbl">Password</label><input class="inp" type="password" id="sPass" placeholder="••••••" onkeydown="if(event.key==='Enter')studentLogin()"/></div>
+    <button class="btn-main" onclick="studentLogin()">Login →</button>
+    <div class="err" id="sErr">Invalid Enrollment No. or password.</div>
+  </div>
+</div>
+
+<!-- STUDENT DASHBOARD (shows scheduled exams) -->
+<div class="screen" id="s-stu-dash" style="flex-direction:column;background:var(--bg)">
+  <nav class="anav">
+    <div class="abrand"><div class="abrand-dot" style="background:var(--ok)"></div>ExamPortal Student</div>
+    <div class="nav-right">
+      <div class="paper-tag" id="stuNavTag" style="background:var(--ok-lt);color:var(--ok)">Student</div>
+      <button class="nav-logout" onclick="logout()">Logout</button>
+    </div>
+  </nav>
+  <div class="stu-dash">
+    <div class="stu-welcome">
+      <div style="font-size:1.25rem;font-weight:800;margin-bottom:.3rem" id="stuWelcomeName">Welcome!</div>
+      <div style="font-size:.82rem;opacity:.75" id="stuWelcomeInfo">—</div>
+    </div>
+    <div style="font-size:.88rem;font-weight:700;color:var(--mu);margin-bottom:.8rem">📋 Your Scheduled Exams</div>
+    <div id="stuExamList" class="stu-exams"></div>
+  </div>
+</div>
+
+<!-- PAPER SETUP WIZARD -->
+<div class="screen" id="s-wizard">
+  <div class="wiz-box">
+    <div class="wsteps">
+      <div class="wst active" id="ws1">1</div><div class="wline" id="wl1"></div>
+      <div class="wst" id="ws2">2</div><div class="wline" id="wl2"></div>
+      <div class="wst" id="ws3">3</div><div class="wline" id="wl3"></div>
+      <div class="wst" id="ws4">4</div>
+    </div>
+    <div class="wiz-title" id="wTitle">Select Department</div>
+    <div class="wiz-sub"   id="wSub">Choose the department for this paper.</div>
+
+    <!-- W1: Dept -->
+    <div class="wpage active" id="wp1">
+      <div class="dept-grid">
+        <div class="dept-card" onclick="selDept(this,'Electrical Engineering')"><span class="dept-icon">⚡</span><div class="dept-name">Electrical Engineering</div></div>
+        <div class="dept-card" onclick="selDept(this,'Mechanical Engineering')"><span class="dept-icon">⚙️</span><div class="dept-name">Mechanical Engineering</div></div>
+        <div class="dept-card" onclick="selDept(this,'Computer Engineering')"><span class="dept-icon">💻</span><div class="dept-name">Computer Engineering</div></div>
+        <div class="dept-card" onclick="selDept(this,'Electronics Engineering')"><span class="dept-icon">📡</span><div class="dept-name">Electronics Engineering</div></div>
+        <div class="dept-card" onclick="selDept(this,'Civil Engineering')"><span class="dept-icon">🏗️</span><div class="dept-name">Civil Engineering</div></div>
+      </div>
+      <div class="wiz-nav">
+        <button class="btn-wb" onclick="showS('s-admin')">← Panel</button>
+        <button class="btn-wn" id="wn1" onclick="wGo(2)" disabled>Next →</button>
+      </div>
+    </div>
+
+    <!-- W2: Subject -->
+    <div class="wpage" id="wp2">
+      <div class="sub-pick-grid" id="subPickGrid"></div>
+      <button class="manage-sub-btn" onclick="openManageSubW()">⚙️ Manage Subjects List</button>
+      <div class="wiz-nav">
+        <button class="btn-wb" onclick="wGo(1)">← Back</button>
+        <button class="btn-wn" id="wn2" onclick="wGo(3)" disabled>Next →</button>
+      </div>
+    </div>
+
+    <!-- W3: Config -->
+    <div class="wpage" id="wp3">
+      <div class="cfg-row">
+        <div><div class="cfg-label">Total Questions (Paper)</div><div class="cfg-desc">How many questions the student will see</div></div>
+        <div class="cfg-ctrl"><input type="number" id="cfgQ" value="60" min="1" max="200" oninput="calcTotal()"/> <span style="font-size:.78rem;color:var(--mu)">Q</span></div>
+      </div>
+      <div class="cfg-row">
+        <div><div class="cfg-label">Marks per Question</div></div>
+        <div class="cfg-ctrl"><input type="number" id="cfgM" value="1" min="0.25" max="10" step="0.25" oninput="calcTotal()"/> <span style="font-size:.78rem;color:var(--mu)">mark(s)</span></div>
+      </div>
+      <div class="cfg-row" style="background:var(--pri-lt);border-color:rgba(26,86,219,.2)">
+        <div><div class="cfg-label" style="color:var(--pri)">📊 Total Marks</div><div class="cfg-desc">Auto-calculated</div></div>
+        <div class="calc-disp" id="calcDisp">60</div>
+      </div>
+      <div class="cfg-row">
+        <div><div class="cfg-label">Duration</div></div>
+        <div class="cfg-ctrl"><input type="number" id="cfgDur" value="60" min="10" max="300"/> <span style="font-size:.78rem;color:var(--mu)">min</span></div>
+      </div>
+      <div class="cfg-row">
+        <div><div class="cfg-label">Passing Percentage</div></div>
+        <div class="cfg-ctrl"><input type="number" id="cfgPass" value="40" min="1" max="99"/> <span style="font-size:.78rem;color:var(--mu)">%</span></div>
+      </div>
+      <div class="wiz-nav">
+        <button class="btn-wb" onclick="wGo(2)">← Back</button>
+        <button class="btn-wn" onclick="wGo(4)">Next →</button>
+      </div>
+    </div>
+
+    <!-- W4: Options -->
+    <div class="wpage" id="wp4">
+      <div style="background:var(--bg);border-radius:12px;padding:1rem 1.2rem;">
+        <div class="trow">
+          <div><div class="tl">Shuffle Questions</div><div class="td">Random order per student</div></div>
+          <label class="toggle"><input type="checkbox" id="cfgSh" checked/><span class="tsl"></span></label>
+        </div>
+        <div class="trow">
+          <div><div class="tl">Shuffle Options (A/B/C/D)</div><div class="td">Options shuffle per student</div></div>
+          <label class="toggle"><input type="checkbox" id="cfgShO" checked/><span class="tsl"></span></label>
+        </div>
+        <div class="trow">
+          <div><div class="tl">Negative Marking</div><div class="td">−0.25 marks per wrong answer</div></div>
+          <label class="toggle"><input type="checkbox" id="cfgNeg"/><span class="tsl"></span></label>
+        </div>
+      </div>
+      <div style="background:var(--ok-lt);border:1px solid var(--ok);border-radius:11px;padding:.9rem 1.1rem;margin-top:1rem;font-size:.83rem;color:var(--ok);font-weight:600;">
+        ✅ Creating paper: <span id="cfgSum">—</span>
+      </div>
+      <div class="wiz-nav">
+        <button class="btn-wb" onclick="wGo(3)">← Back</button>
+        <button class="btn-wn" onclick="createPaper()" style="background:var(--ok)">🚀 Create Paper</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADMIN PANEL ══ -->
+<div class="screen" id="s-admin">
+  <nav class="anav">
+    <div class="abrand"><div class="abrand-dot"></div>ExamPortal Admin</div>
+    <div class="atabs">
+      <button class="tbtn active" onclick="swTab('papers',this)">📄 Papers</button>
+      <button class="tbtn" onclick="swTab('questions',this)">📝 Questions</button>
+      <button class="tbtn" onclick="swTab('chapters',this)">📖 Chapters</button>
+      <button class="tbtn" onclick="swTab('schedule',this)">📅 Schedule</button>
+      <button class="tbtn" onclick="swTab('faculty',this)">👨‍🏫 Faculty</button>
+      <button class="tbtn" onclick="swTab('students',this)">🎓 Students</button>
+      <button class="tbtn" onclick="swTab('results',this)">📊 Results</button>
+      <button class="tbtn" onclick="swTab('settings',this)">⚙️ Settings</button>
+    </div>
+    <div class="nav-right">
+      <button class="nav-logout" onclick="logout()">Logout</button>
+    </div>
+  </nav>
+  <div class="abody">
+
+    <!-- ── PAPERS TAB ── -->
+    <div class="apanel active" id="tab-papers">
+      <div class="pg-hd">
+        <div><div class="pg-title">📄 Paper Bank</div><div class="pg-sub">Each department × subject has its own independent paper and question pool.</div></div>
+        <button class="btn btn-pri" onclick="showS('s-wizard');wStep=0;wGo(1)">+ New Paper</button>
+      </div>
+      <!-- Dept filter -->
+      <div class="um-toolbar">
+        <select class="fsel" id="pbDeptFilter" onchange="renderPaperBank()">
+          <option value="">All Departments</option>
+          <option>Electrical Engineering</option><option>Mechanical Engineering</option>
+          <option>Computer Engineering</option><option>Electronics Engineering</option>
+          <option>Civil Engineering</option>
+        </select>
+      </div>
+      <div id="paperBankGrid" class="paper-bank-grid"></div>
+    </div>
+
+    <!-- ── QUESTIONS TAB ── -->
+    <div class="apanel" id="tab-questions">
+      <div class="pg-hd">
+        <div>
+          <div class="pg-title">📝 Question Pool</div>
+          <div class="pg-sub" id="qbSub">Select a paper above to add questions.</div>
+        </div>
+        <span class="qcnt" id="qCntBadge">— Q</span>
+      </div>
+      <!-- Paper selector bar -->
+      <div style="background:#fff;border:1px solid var(--bd);border-radius:12px;padding:.9rem 1.2rem;margin-bottom:1.3rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;">
+        <span style="font-size:.78rem;font-weight:700;color:var(--mu)">Active Paper:</span>
+        <select class="fsel" id="qbDeptSel" onchange="qbSubjPopulate()" style="min-width:200px">
+          <option value="">— Dept —</option>
+          <option>Electrical Engineering</option><option>Mechanical Engineering</option>
+          <option>Computer Engineering</option><option>Electronics Engineering</option>
+          <option>Civil Engineering</option>
+        </select>
+        <select class="fsel" id="qbSubjSel" onchange="loadQB()" style="min-width:180px">
+          <option value="">— Subject —</option>
+        </select>
+        <button class="btn btn-ghost btn-sm" onclick="showS('s-wizard');wStep=0;wGo(1)">+ New Paper</button>
+      </div>
+      <!-- PIB -->
+      <div class="pib" id="pib" style="display:none">
+        <div class="pib-item"><div class="pib-lbl">Dept</div><div class="pib-val" id="pibDept">—</div></div>
+        <div class="pib-div"></div>
+        <div class="pib-item"><div class="pib-lbl">Subject</div><div class="pib-val" id="pibSubj">—</div></div>
+        <div class="pib-div"></div>
+        <div class="pib-item"><div class="pib-lbl">Questions</div><div class="pib-val" id="pibQ">—</div></div>
+        <div class="pib-div"></div>
+        <div class="pib-item"><div class="pib-lbl">Marks/Q</div><div class="pib-val" id="pibMpq">—</div></div>
+        <div class="pib-div"></div>
+        <div class="pib-item"><div class="pib-lbl">Total</div><div class="pib-val" id="pibTot">—</div></div>
+        <div class="pib-div"></div>
+        <div class="pib-item"><div class="pib-lbl">Duration</div><div class="pib-val" id="pibDur">—</div></div>
+      </div>
+      <!-- Add Q form -->
+      <div class="addq-card" id="addQForm" style="display:none">
+        <div class="addq-title"><span class="addq-icon">➕</span>Add New Question</div>
+        <div class="pool-bar" id="poolBar">📦 Pool: <span id="poolCount">0</span> Q · Paper picks <span id="poolPick">—</span> per student</div>
+        <div class="row2" style="margin-bottom:.7rem">
+          <div class="fld" style="margin:0"><label class="lbl">Chapter / Unit</label>
+            <select class="inp" id="qChapter"><option value="">— No Chapter —</option></select>
+          </div>
+          <div></div>
+        </div>
+        <div class="fld"><label class="lbl">Question Text</label><input class="inp" type="text" id="qTxt" placeholder="Type question…"/></div>
+        <div class="opts-grid">
+          <div class="opt-wrap"><span class="opt-lbl">A</span><input class="inp" type="text" id="o0" placeholder="Option A"/></div>
+          <div class="opt-wrap"><span class="opt-lbl">B</span><input class="inp" type="text" id="o1" placeholder="Option B"/></div>
+          <div class="opt-wrap"><span class="opt-lbl">C</span><input class="inp" type="text" id="o2" placeholder="Option C"/></div>
+          <div class="opt-wrap"><span class="opt-lbl">D</span><input class="inp" type="text" id="o3" placeholder="Option D"/></div>
+        </div>
+        <div class="qform-foot">
+          <div class="fld" style="margin:0;flex:0 0 140px">
+            <label class="lbl">Correct</label>
+            <select class="inp" id="qCorr"><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select>
+          </div>
+          <button class="btn btn-pri" onclick="addQ()" style="margin-top:1.05rem">+ Add Question</button>
+        </div>
+      </div>
+      <div id="qListSec" style="display:none">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem;flex-wrap:wrap;gap:.6rem">
+          <span style="font-size:.85rem;font-weight:700;color:var(--mu)">Question List</span>
+          <button class="btn btn-red btn-sm" onclick="clearAllQ()">🗑 Clear All</button>
+        </div>
+        <div id="qList"></div>
+      </div>
+      <div class="card" id="qCsvCard" style="display:none;margin-top:1rem">
+        <div class="card-title">⬆️ Upload Questions CSV (by Chapter)</div>
+        <div style="font-size:.8rem;color:var(--mu);margin-bottom:.6rem">
+          Format: <code>chapter,question,option1,option2,option3,option4,correct_index</code>
+          (correct_index: 0-3 or 1-4 or A/B/C/D)
+        </div>
+        <div style="display:flex;gap:.7rem;flex-wrap:wrap;align-items:center">
+          <input type="file" id="qCsvFile" accept=".csv" class="inp" style="max-width:320px"/>
+          <button class="btn btn-pri btn-sm" onclick="uploadQuestionsCSV()">Upload CSV</button>
+          <button class="btn btn-ghost btn-sm" onclick="downloadQuestionsCSVTemplate()">Download Template</button>
+          <a class="btn btn-ghost btn-sm" href="samples/questions_sample.csv" download>Sample CSV</a>
+        </div>
+      </div>
+      <div class="card" id="paperChapCard" style="display:none;margin-top:1rem">
+        <div class="card-title">📌 Paper Chapter Selection</div>
+        <div id="paperChapSel" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.4rem"></div>
+        <div style="margin-top:.7rem;display:flex;gap:.6rem;flex-wrap:wrap">
+          <button class="btn btn-ok btn-sm" onclick="savePaperChapterSelection()">Save Selection</button>
+          <button class="btn btn-ghost btn-sm" onclick="selectAllPaperChapters()">Select All</button>
+          <button class="btn btn-red btn-sm" onclick="clearPaperChapterSelection()">Clear</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CHAPTERS TAB ── -->
+    <div class="apanel" id="tab-chapters">
+      <div class="pg-hd">
+        <div><div class="pg-title">📖 Chapter Weightage</div><div class="pg-sub">Per-paper chapter setup. Questions are picked proportionally from each chapter pool.</div></div>
+        <button class="btn btn-pri" onclick="addChapter()">+ Add Chapter</button>
+      </div>
+      <!-- Paper selector -->
+      <div style="background:#fff;border:1px solid var(--bd);border-radius:12px;padding:.9rem 1.2rem;margin-bottom:1.3rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;">
+        <span style="font-size:.78rem;font-weight:700;color:var(--mu)">Paper:</span>
+        <select class="fsel" id="chapDeptSel" onchange="chapSubjPopulate()" style="min-width:200px">
+          <option value="">— Dept —</option>
+          <option>Electrical Engineering</option><option>Mechanical Engineering</option>
+          <option>Computer Engineering</option><option>Electronics Engineering</option>
+          <option>Civil Engineering</option>
+        </select>
+        <select class="fsel" id="chapSubjSel" onchange="loadChaptersForPaper()" style="min-width:180px">
+          <option value="">— Subject —</option>
+        </select>
+      </div>
+      <div class="card" style="margin-bottom:1.3rem">
+        <div class="card-title">📖 How Chapter Weightage Works</div>
+        <div style="font-size:.83rem;color:var(--mu);line-height:1.7">
+          1. Select a paper (dept + subject) then add chapters with marks.<br>
+          2. Tag each question to a chapter when adding questions.<br>
+          3. Students get questions picked proportionally from each chapter's pool.<br>
+          4. Example: 3 chapters (10M+5M+15M=30M paper) → Ch1 contributes 33%, Ch2 17%, Ch3 50%.
+        </div>
+      </div>
+      <div class="chap-list" id="chapList"></div>
+      <div class="chap-total-bar" id="chapTotalBar" style="display:none">
+        <span>📊 Chapter Marks Total: <strong id="chapTotalMrk">0</strong></span>
+        <span style="font-size:.76rem;opacity:.7">Paper = <span id="chapTotalQ">0</span> Q × <span id="chapTotalMpq">1</span>M = <span id="chapTotalPaper">0</span>M</span>
+      </div>
+      <div class="chap-warn" id="chapWarn"></div>
+      <div style="margin-top:1rem;display:flex;gap:.7rem;flex-wrap:wrap">
+        <button class="btn btn-ok" onclick="saveChapters()">💾 Save Chapters</button>
+        <button class="btn btn-red btn-sm" onclick="clearChapters()">🗑 Clear All</button>
+      </div>
+    </div>
+
+    <!-- ── SCHEDULE TAB ── -->
+    <div class="apanel" id="tab-schedule">
+      <div class="pg-hd">
+        <div><div class="pg-title">📅 Exam Schedule</div><div class="pg-sub">Set when each paper is available for each department & year.</div></div>
+        <button class="btn btn-pri" onclick="openAddSchedule()">+ Schedule Exam</button>
+      </div>
+      <div class="um-toolbar">
+        <select class="fsel" id="schedDeptFilter" onchange="renderSchedules()">
+          <option value="">All Departments</option>
+          <option>Electrical Engineering</option><option>Mechanical Engineering</option>
+          <option>Computer Engineering</option><option>Electronics Engineering</option>
+          <option>Civil Engineering</option>
+        </select>
+        <select class="fsel" id="schedStatusFilter" onchange="renderSchedules()">
+          <option value="">All Status</option>
+          <option value="active">Active (Live Now)</option>
+          <option value="upcoming">Upcoming</option>
+          <option value="expired">Expired</option>
+        </select>
+      </div>
+      <div id="schedGrid" class="sched-grid"></div>
+    </div>
+
+    <!-- ── FACULTY TAB ── -->
+    <div class="apanel" id="tab-faculty">
+      <!-- Add/edit sub-admin -->
+      <div class="moverlay" id="m-subadmin">
+        <div class="mbox" style="max-width:500px">
+          <div class="mtitle">➕ Add Sub-Admin</div>
+          <input type="hidden" id="subAdminEditId"/>
+          <div class="row2">
+            <div class="fld"><label class="lbl">Sub-Admin Name</label><input class="inp" type="text" id="subAdminName" placeholder="Sub-Admin name"/></div>
+            <div class="fld"><label class="lbl">Sub-Admin ID</label><input class="inp" type="text" id="subAdminIdModal" placeholder="e.g. SUB001"/></div>
+          </div>
+          <div class="fld"><label class="lbl">Password</label><input class="inp" type="text" id="subAdminPassModal" placeholder="Set password"/></div>
+          <div class="fld"><label class="lbl">Department Access</label>
+            <div class="dept-checks" id="subAdminDeptChecks">
+              <label class="dept-check-row"><input type="checkbox" value="Electrical Engineering"/> Electrical Engineering</label>
+              <label class="dept-check-row"><input type="checkbox" value="Mechanical Engineering"/> Mechanical Engineering</label>
+              <label class="dept-check-row"><input type="checkbox" value="Computer Engineering"/> Computer Engineering</label>
+              <label class="dept-check-row"><input type="checkbox" value="Electronics Engineering"/> Electronics Engineering</label>
+              <label class="dept-check-row"><input type="checkbox" value="Civil Engineering"/> Civil Engineering</label>
+            </div>
+          </div>
+          <div class="fld"><label class="lbl">Subject Access (comma separated; blank = all)</label>
+            <input class="inp" type="text" id="subAdminSubjects" placeholder="e.g. Mathematics, Physics"/>
+          </div>
+          <div class="fld"><label class="lbl">6-Digit Code (auto-generated)</label>
+            <input class="inp" type="text" id="subAdminCode" readonly/>
+          </div>
+          <div class="mact">
+            <button class="btn-mcancel" onclick="closeM('m-subadmin')">Cancel</button>
+            <button class="btn-mok" onclick="saveSubAdmin()">Save Sub-Admin</button>
+          </div>
+        </div>
+      </div>
+      <div class="pg-hd">
+        <div><div class="pg-title">Faculty Accounts</div><div class="pg-sub">Create faculty and sub-admin logins with dept & subject access.</div></div>
+        <button class="btn btn-pur" onclick="openAddFaculty()">+ Add Faculty</button>
+        <button class="btn btn-ok" onclick="openAddSubAdmin()">+ Add Sub-Admin</button>
+      </div>
+      <div class="um-toolbar">
+        <input class="um-search" id="facSearch" placeholder="🔍 Search…" oninput="renderFaculty()"/>
+        <select class="fsel" id="facDeptFilter" onchange="renderFaculty()">
+          <option value="">All Departments</option>
+          <option>Electrical Engineering</option><option>Mechanical Engineering</option>
+          <option>Computer Engineering</option><option>Electronics Engineering</option>
+          <option>Civil Engineering</option>
+        </select>
+      </div>
+      <div class="tbl-wrap">
+        <table><thead><tr>
+          <th>#</th><th>Name</th><th>ID</th><th>Password</th><th>Role</th>
+          <th>Departments</th><th>Subjects</th><th>Actions</th>
+        </tr></thead>
+        <tbody id="facTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── STUDENTS TAB ── -->
+    <div class="apanel" id="tab-students">
+      <div class="pg-hd">
+        <div><div class="pg-title">Student Accounts</div><div class="pg-sub">Create student logins.</div></div>
+        <button class="btn btn-pri" onclick="openAddStudent()">+ Add Student</button>
+      </div>
+      <div class="um-toolbar">
+        <input class="um-search" id="stuSearch" placeholder="🔍 Search…" oninput="renderStudents()"/>
+        <select class="fsel" id="stuDeptFilter" onchange="renderStudents()">
+          <option value="">All Departments</option>
+          <option>Electrical Engineering</option><option>Mechanical Engineering</option>
+          <option>Computer Engineering</option><option>Electronics Engineering</option>
+          <option>Civil Engineering</option>
+        </select>
+        <select class="fsel" id="stuYearFilter" onchange="renderStudents()">
+          <option value="">All Years</option>
+          <option value="1st Year">1st Year</option>
+          <option value="2nd Year">2nd Year</option>
+          <option value="3rd Year">3rd Year</option>
+          <option value="4th Year">4th Year</option>
+        </select>
+        <span style="font-size:.78rem;color:var(--mu);margin-left:auto" id="stuCount">0 students</span>
+      </div>
+      <div class="card" style="margin-bottom:1rem">
+        <div class="card-title">⬆️ Upload Students CSV</div>
+        <div style="font-size:.8rem;color:var(--mu);margin-bottom:.6rem">
+          Format: <code>enrollment,year_sem,department,section(optional)</code>
+        </div>
+        <div style="display:flex;gap:.7rem;flex-wrap:wrap;align-items:center">
+          <input type="file" id="stuCsvFile" accept=".csv" class="inp" style="max-width:320px"/>
+          <button class="btn btn-pri btn-sm" onclick="uploadStudentsCSV()">Upload CSV</button>
+          <button class="btn btn-ghost btn-sm" onclick="downloadStudentsCSVTemplate()">Download Template</button>
+          <a class="btn btn-ghost btn-sm" href="samples/students_sample.csv" download>Sample CSV</a>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+          <button class="btn btn-ok" id="downloadStudentPDF" style="margin-bottom:1rem">Download PDF</button>
+        <table><thead><tr>
+          <th>#</th><th>ID</th><th>Enrollment</th><th>Password</th><th>Exam Code</th>
+          <th>Section</th><th>Year/Sem</th><th>Department</th><th>Actions</th>
+        </tr></thead>
+        <tbody id="stuTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── RESULTS TAB ── -->
+    <div class="apanel" id="tab-results">
+      <div class="pg-hd"><div><div class="pg-title">Student Results</div><div class="pg-sub">All submitted exam results.</div></div></div>
+      <div class="stats-mini" id="statsMini"></div>
+      <div class="um-toolbar">
+        <button class="btn btn-red btn-sm" onclick="clearResults()">🗑 Clear All</button>
+        <span style="font-size:.78rem;color:var(--mu);margin-left:auto" id="resCnt">0 results</span>
+      </div>
+      <div class="filter-row">
+        <select id="pdfDept">
+          <option value="">Select Department</option>
+          <option>Electrical Engineering</option><option>Mechanical Engineering</option>
+          <option>Computer Engineering</option><option>Electronics Engineering</option>
+          <option>Civil Engineering</option>
+        </select>
+        <select id="pdfSubject">
+          <option value="">Select Subject</option>
+        </select>
+        <button class="btn btn-ok" id="downloadResultPDF" style="margin-left:1rem">Download PDF</button>
+      </div>
+      <div class="tbl-wrap"><table>
+        <thead><tr>
+          <th>#</th><th>Name</th><th>Enrollment</th><th>Section</th>
+          <th>Department</th><th>Year/Sem</th><th>Subject</th>
+          <th>Score%</th><th>Marks</th><th>Total</th>
+          <th>✓</th><th>✗</th><th>—</th>
+          <th>Grade</th><th>Time</th><th>Note</th><th>Submitted At</th>
+        </tr></thead>
+        <tbody id="resTbody"></tbody>
+      </table></div>
+    </div>
+
+    <!-- ── SETTINGS TAB ── -->
+    <div class="apanel" id="tab-settings">
+      <div class="pg-hd">
+        <div><div class="pg-title">Settings</div><div class="pg-sub">Manage global subjects per department.</div></div>
+      </div>
+      <div class="scard">
+        <div class="scard-title">📚 Subjects by Department</div>
+        <div style="margin-bottom:.7rem">
+          <select class="fsel" id="sSettDept" onchange="loadSettingsSubjects()" style="min-width:220px">
+            <option value="">— Select Department —</option>
+            <option>Electrical Engineering</option><option>Mechanical Engineering</option>
+            <option>Computer Engineering</option><option>Electronics Engineering</option>
+            <option>Civil Engineering</option>
+          </select>
+        </div>
+        <div class="sub-tags" id="sSubTags"></div>
+        <div class="add-sub-row">
+          <input class="inp" type="text" id="sSubInp" placeholder="Add subject…" onkeydown="if(event.key==='Enter')addSubSettings()"/>
+          <button class="btn-addsub" onclick="addSubSettings()">+ Add</button>
+        </div>
+      </div>
+      <div class="scard">
+        <div class="scard-title">🔐 Admin Password</div>
+        <div class="srow">
+          <div><div class="sl">Admin Password</div><div class="sd">Change login password</div></div>
+          <div class="sc">
+            <input class="inp" type="text" id="sAdminPass" style="width:160px" placeholder="New password"/>
+            <button class="btn btn-ok btn-sm" onclick="saveAdminPass()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /abody -->
+</div><!-- /s-admin -->
+
+<!-- ══ FACULTY PANEL ══ -->
+<div class="screen" id="s-faculty">
+  <nav class="anav">
+    <div class="abrand"><div class="abrand-dot" style="background:var(--pur)"></div>ExamPortal Faculty</div>
+    <div class="nav-right">
+      <div class="paper-tag fac-tag" id="facNavTag">Faculty</div>
+      <button class="nav-logout" onclick="logout()">Logout</button>
+    </div>
+  </nav>
+  <div class="abody">
+    <div class="fac-header">
+      <div>
+        <div class="fac-info-name" id="facWelcomeName">Faculty</div>
+        <div class="fac-info-dept" id="facWelcomeDept">—</div>
+        <div class="fac-info-access" id="facWelcomeAccess">—</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:.7rem;color:var(--mu);font-family:'JetBrains Mono',monospace">Faculty ID</div>
+        <div style="font-size:1.3rem;font-weight:800;color:var(--pur)" id="facWelcomeId">—</div>
+      </div>
+    </div>
+    <div class="pg-hd">
+      <div><div class="pg-title">Results</div><div class="pg-sub" id="facResultSub">Filtered by your dept/subject access.</div></div>
+      <button class="btn btn-ok" id="downloadFacResultPDF">Download PDF</button>
+    </div>
+    <div class="stats-mini" id="facStatsMini"></div>
+    <div class="filter-row">
+      <select id="facRFDept" onchange="onFacDeptChange()"><option value="">All My Departments</option></select>
+      <select id="facRFSubject" onchange="renderFacResults()"><option value="">All My Subjects</option></select>
+      <select id="facRFGrade" onchange="renderFacResults()">
+        <option value="">All Grades</option><option>A</option><option>B</option><option>C</option><option>F</option>
+      </select>
+      <input id="facRFSearch" placeholder="🔍 Search…" oninput="renderFacResults()" style="border:1.5px solid var(--bd);border-radius:8px;padding:.38rem .72rem;font-family:'Outfit',sans-serif;font-size:.78rem;outline:none;min-width:190px;"/>
+    </div>
+    <div class="card" style="padding:1rem 1.1rem;margin-bottom:1rem">
+      <div class="card-title">🔐 Restart Access (Sub-Admin/Admin)</div>
+      <div class="filter-row" style="margin-bottom:0">
+        <input id="facResetEnroll" placeholder="Enrollment No" style="border:1.5px solid var(--bd);border-radius:8px;padding:.38rem .72rem;font-family:'Outfit',sans-serif;font-size:.78rem;outline:none;min-width:190px;"/>
+        <select id="facResetSched" class="fsel"><option value="">Select Schedule</option></select>
+        <button class="btn btn-pri btn-sm" onclick="regenerateStudentExamCode()">Generate Code</button>
+        <button class="btn btn-ghost btn-sm" onclick="regenerateAllExamCodesForAccess()">Generate All Codes</button>
+        <button class="btn btn-ok btn-sm" onclick="resetStudentExamAccess()">Reset Session</button>
+      </div>
+    </div>
+    <div class="tbl-wrap"><table>
+      <thead><tr>
+        <th>#</th><th>Name</th><th>Enrollment</th><th>Section</th>
+        <th>Department</th><th>Year/Sem</th><th>Subject</th>
+        <th>Score%</th><th>Marks</th><th>Total</th>
+        <th>✓</th><th>✗</th><th>—</th>
+        <th>Grade</th><th>Time</th><th>Submitted At</th>
+      </tr></thead>
+      <tbody id="facResTbody"></tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- ══ EXAM SCREEN ══ -->
+<div class="screen" id="s-exam">
+  <div class="etop">
+    <div><div class="epname" id="ePName">Examination</div><div class="esinfo" id="eSInfo">—</div></div>
+    <div class="etimer" id="eTimer">60:00</div>
+    <button class="btn-submit" onclick="openSubmitM()">Submit Exam ✓</button>
+  </div>
+  <div class="epbar"><div class="epfill" id="eProg" style="width:0%"></div></div>
+  <div class="ebody">
+    <div class="qsb">
+      <div class="sb-title">Question Palette</div>
+      <div class="qgrid" id="sideGrid"></div>
+      <div class="leg">
+        <div class="legrow"><span class="legd" style="background:var(--pri-lt);border-color:var(--pri)"></span>Current</div>
+        <div class="legrow"><span class="legd" style="background:var(--ok-lt);border-color:var(--ok)"></span>Answered</div>
+        <div class="legrow"><span class="legd" style="background:var(--bg);border-color:var(--bd)"></span>Not visited</div>
+      </div>
+    </div>
+    <div class="emain">
+      <div id="qCon"></div>
+      <div class="ectrl">
+        <button class="btn-nav" id="bPrev" onclick="eNav(-1)" disabled>← Previous</button>
+        <button class="btn-nav" id="bNext" onclick="eNav(1)">Next →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ RESULT SCREEN ══ -->
+<div class="screen" id="s-result">
+  <div class="rcard">
+    <div class="rcirc">
+      <svg viewBox="0 0 100 100">
+        <circle class="rcbg" cx="50" cy="50" r="42"/>
+        <circle class="rcfill" id="rcF" cx="50" cy="50" r="42" stroke-dasharray="263.9" stroke-dashoffset="263.9"/>
+      </svg>
+      <div class="rpct"><div id="rPct">0%</div><div class="rplbl">Score</div></div>
+    </div>
+    <div class="rtitle" id="rTit">Well Done!</div>
+    <div class="rdetail" id="rDet"></div>
+    <div class="rstats">
+      <div class="rstat rsc"><div class="rsv" id="rC">0</div><div class="rsk">Correct</div></div>
+      <div class="rstat rsw"><div class="rsv" id="rW">0</div><div class="rsk">Wrong</div></div>
+      <div class="rstat rss"><div class="rsv" id="rS">0</div><div class="rsk">Skipped</div></div>
+    </div>
+    <button class="btn-done" onclick="showS('s-stu-dash');renderStuDash()">← Back to Dashboard</button>
+  </div>
+</div>
+
+<!-- ══ JS MODULES ══ -->
+<script src="js/db.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/app.js"></script>
+<script>
+// PDF export for student list
+window.addEventListener('DOMContentLoaded', function() {
+  const btnStuPdf = document.getElementById('downloadStudentPDF');
+  if (btnStuPdf) {
+    btnStuPdf.onclick = function() {
+      const deptF = document.getElementById('stuDeptFilter')?.value || '';
+      const yearF = document.getElementById('stuYearFilter')?.value || '';
+      const stus = DB.students.filter(s => {
+        if (deptF && s.branch !== deptF) return false;
+        if (yearF && !(String(s.year || '').startsWith(yearF))) return false;
+        return true;
+      });
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.setFont('helvetica', 'bold');
+      doc.text('Student ID & Password List', 10, 10);
+      doc.setFont('helvetica', 'normal');
+      let y = 20;
+      doc.text(`Filter: Dept ${deptF || 'All'} | Year ${yearF || 'All'}`, 10, y);
+      y += 8;
+      doc.text('No.  ID  Enrollment         Year         Password         ExamCode', 10, y);
+      y += 8;
+      stus.forEach((s, i) => {
+        y += 8;
+        if (y > 280) { doc.addPage(); y = 20; }
+      });
+      doc.save('student_id_password_list.pdf');
+    };
+  }
+
+  const pdfDept = document.getElementById('pdfDept');
+  const pdfSubject = document.getElementById('pdfSubject');
+  if (pdfDept && pdfSubject) {
+    const syncSubjects = () => {
+      const dept = pdfDept.value;
+      const prevSubject = pdfSubject.value;
+      const subjects = dept ? DB.getSubjects(dept) : [];
+      pdfSubject.innerHTML = '<option value="">Select Subject</option>' +
+        subjects.map(s => `<option>${s}</option>`).join('');
+      if (subjects.includes(prevSubject)) pdfSubject.value = prevSubject;
+    };
+    pdfDept.addEventListener('change', () => { syncSubjects(); renderResults(); });
+    pdfSubject.addEventListener('change', renderResults);
+    syncSubjects();
+  }
+
+  const btnResPdf = document.getElementById('downloadResultPDF');
+  if (btnResPdf) {
+    btnResPdf.onclick = function() {
+      const dept = document.getElementById('pdfDept')?.value || '';
+      const subject = document.getElementById('pdfSubject')?.value || '';
+      if (!dept || !subject) {
+        toast('⚠️ Select both Department and Subject to download PDF.');
+        return;
+      }
+      const rows = DB.results.filter(r => {
+        if (r.branch !== dept) return false;
+        if (r.subject !== subject) return false;
+        return true;
+      });
+      if (!rows.length) { toast('⚠️ No results found for selected filters.'); return; }
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      let y = 14;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(14);
+      doc.text('Student Results', 10, y);
+      y += 8;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(11);
+      doc.text(`Department: ${dept}`, 10, y);
+      y += 6;
+      doc.text(`Subject: ${subject}`, 10, y);
+      y += 8;
+      doc.setFont('helvetica', 'bold');
+      doc.text('S.No | Enrollment No | Score | Result', 10, y);
+      y += 6;
+      doc.setFont('helvetica', 'normal');
+
+      rows.forEach((r, i) => {
+        const score = Number(r.score || 0);
+        const result = (r.grade ? r.grade !== 'F' : score >= 40) ? 'Pass' : 'Fail';
+        const line = `${i + 1} | ${r.enroll || ''} | ${score}% | ${result}`;
+        doc.text(line, 10, y);
+        y += 6;
+        if (y > 280) { doc.addPage(); y = 14; }
+      });
+      doc.save(`student_results_${new Date().toISOString().slice(0, 10)}.pdf`);
+      toast('📄 PDF downloaded!');
+    };
+  }
+
+  const btnFacResPdf = document.getElementById('downloadFacResultPDF');
+  if (btnFacResPdf) {
+    btnFacResPdf.onclick = function() {
+      if (!currentFaculty) { toast('⚠️ Login required.'); return; }
+      const dept = document.getElementById('facRFDept')?.value || '';
+      const subject = document.getElementById('facRFSubject')?.value || '';
+      if (!dept || !subject) {
+        toast('⚠️ Select both Department and Subject to download PDF.');
+        return;
+      }
+      const rows = DB.results.filter(r => {
+        if (!currentFaculty.depts.includes(r.branch)) return false;
+        if (currentFaculty.subjects && currentFaculty.subjects.length &&
+            !currentFaculty.subjects.includes(r.subject)) return false;
+        if (r.branch !== dept) return false;
+        if (r.subject !== subject) return false;
+        return true;
+      });
+      if (!rows.length) { toast('⚠️ No results found for selected filters.'); return; }
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      let y = 14;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(14);
+      doc.text('Faculty Student Results', 10, y);
+      y += 8;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(11);
+      doc.text(`Department: ${dept}`, 10, y);
+      y += 6;
+      doc.text(`Subject: ${subject}`, 10, y);
+      y += 8;
+      doc.setFont('helvetica', 'bold');
+      doc.text('S.No | Enrollment No | Score | Result', 10, y);
+      y += 6;
+      doc.setFont('helvetica', 'normal');
+
+      rows.forEach((r, i) => {
+        const score = Number(r.score || 0);
+        const result = (r.grade ? r.grade !== 'F' : score >= 40) ? 'Pass' : 'Fail';
+        const line = `${i + 1} | ${r.enroll || ''} | ${score}% | ${result}`;
+        doc.text(line, 10, y);
+        y += 6;
+        if (y > 280) { doc.addPage(); y = 14; }
+      });
+      doc.save(`faculty_results_${dept}_${subject}_${new Date().toISOString().slice(0, 10)}.pdf`);
+      toast('📄 PDF downloaded!');
+    };
+  }
+});
+/**
+ * ExamPortal — Database Layer (localStorage-based)
+ * Upgrade this to IndexedDB or backend API without changing other files.
+ */
+
+const CLOUD_API_BASE = window.CLOUD_API_BASE || '/api';
+const CLOUD_STATE_KEYS = [
+  'ep_set', 'ep_qbank', 'ep_papers', 'ep_chaps',
+  'ep_sched', 'ep_res', 'ep_fac', 'ep_stu',
+  'ep_exam_sess', 'ep_subjects'
+];
+let cloudAvailable = false;
+let cloudPushTimer = null;
+
+function collectCloudState() {
+  const state = {};
+  CLOUD_STATE_KEYS.forEach(k => { state[k] = localStorage.getItem(k); });
+  return state;
+}
+
+function applyCloudState(state) {
+  if (!state || typeof state !== 'object') return;
+  CLOUD_STATE_KEYS.forEach(k => {
+    if (Object.prototype.hasOwnProperty.call(state, k)) {
+      const v = state[k];
+      if (v === null || v === undefined) localStorage.removeItem(k);
+      else localStorage.setItem(k, String(v));
+    }
+  });
+}
+
+async function cloudPullState() {
+  try {
+    const res = await fetch(`${CLOUD_API_BASE}/state.php`, { method: 'GET' });
+    if (!res.ok) return;
+    const data = await res.json();
+    if (!data || data.ok !== true) return;
+    applyCloudState(data.state || {});
+    ensureStudentIds();
+    normalizeStudentExamCodes();
+    restoreSession();
+    cloudAvailable = true;
+  } catch {}
+}
+
+async function cloudPushState() {
+  if (!cloudAvailable) return;
+  try {
+    await fetch(`${CLOUD_API_BASE}/state.php`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ state: collectCloudState() })
+    });
+  } catch {}
+}
+
+function scheduleCloudPush() {
+  if (!cloudAvailable) return;
+  clearTimeout(cloudPushTimer);
+  cloudPushTimer = setTimeout(cloudPushState, 600);
+}
+
+document.addEventListener('DOMContentLoaded', () => { restoreSession(); cloudPullState(); });
+
+const DB = {
+  // ── SETTINGS (per paper) ────────────────────────────────────────
+  get settings() {
+    try { return JSON.parse(localStorage.getItem('ep_set') || 'null') || defSettings(); }
+    catch { return defSettings(); }
+  },
+  set settings(v) { localStorage.setItem('ep_set', JSON.stringify(v)); scheduleCloudPush(); },
+
+  // ── QUESTION BANK — keyed by "dept::subject" ───────────────────
+  getQuestions(dept, subject) {
+    try {
+      const all = JSON.parse(localStorage.getItem('ep_qbank') || '{}');
+      return all[`${dept}::${subject}`] || [];
+    } catch { return []; }
+  },
+  setQuestions(dept, subject, qs) {
+    const all = JSON.parse(localStorage.getItem('ep_qbank') || '{}');
+    all[`${dept}::${subject}`] = qs;
+    localStorage.setItem('ep_qbank', JSON.stringify(all));
+    scheduleCloudPush();
+  },
+  getAllPapers() {
+    try {
+      const all = JSON.parse(localStorage.getItem('ep_qbank') || '{}');
+      return Object.keys(all).map(key => {
+        const [dept, subject] = key.split('::');
+        return { dept, subject, count: all[key].length };
+      });
+    } catch { return []; }
+  },
+
+  // ── PAPER CONFIGS — keyed by "dept::subject" ───────────────────
+  getPaperConfig(dept, subject) {
+    try {
+      const all = JSON.parse(localStorage.getItem('ep_papers') || '{}');
+      return all[`${dept}::${subject}`] || null;
+    } catch { return null; }
+  },
+  setPaperConfig(dept, subject, cfg) {
+    const all = JSON.parse(localStorage.getItem('ep_papers') || '{}');
+    all[`${dept}::${subject}`] = cfg;
+    localStorage.setItem('ep_papers', JSON.stringify(all));
+    scheduleCloudPush();
+  },
+  getAllPaperConfigs() {
+    try { return JSON.parse(localStorage.getItem('ep_papers') || '{}'); }
+    catch { return {}; }
+  },
+  deletePaperConfig(dept, subject) {
+    const all = JSON.parse(localStorage.getItem('ep_papers') || '{}');
+    delete all[`${dept}::${subject}`];
+    localStorage.setItem('ep_papers', JSON.stringify(all));
+    scheduleCloudPush();
+  },
+
+  // ── CHAPTERS — keyed by "dept::subject" ────────────────────────
+  getChapters(dept, subject) {
+    try {
+      const all = JSON.parse(localStorage.getItem('ep_chaps') || '{}');
+      return all[`${dept}::${subject}`] || [];
+    } catch { return []; }
+  },
+  setChapters(dept, subject, chaps) {
+    const all = JSON.parse(localStorage.getItem('ep_chaps') || '{}');
+    all[`${dept}::${subject}`] = chaps;
+    localStorage.setItem('ep_chaps', JSON.stringify(all));
+    scheduleCloudPush();
+  },
+
+  // ── SCHEDULES ──────────────────────────────────────────────────
+  get schedules() {
+    try { return JSON.parse(localStorage.getItem('ep_sched') || '[]'); }
+    catch { return []; }
+  },
+  set schedules(v) { localStorage.setItem('ep_sched', JSON.stringify(v)); scheduleCloudPush(); },
+
+  // ── RESULTS ───────────────────────────────────────────────────
+  get results() {
+    try { return JSON.parse(localStorage.getItem('ep_res') || '[]'); }
+    catch { return []; }
+  },
+  set results(v) { localStorage.setItem('ep_res', JSON.stringify(v)); scheduleCloudPush(); },
+
+  // ── FACULTY ───────────────────────────────────────────────────
+  get faculty() {
+    try { return JSON.parse(localStorage.getItem('ep_fac') || '[]'); }
+    catch { return []; }
+  },
+  set faculty(v) { localStorage.setItem('ep_fac', JSON.stringify(v)); scheduleCloudPush(); },
+
+  // ── STUDENTS ──────────────────────────────────────────────────
+  get students() {
+    try { return JSON.parse(localStorage.getItem('ep_stu') || '[]'); }
+    catch { return []; }
+  },
+  set students(v) { localStorage.setItem('ep_stu', JSON.stringify(v)); scheduleCloudPush(); },
+
+  // ── EXAM SESSIONS (resume on interruption) ────────────────────────
+  get examSessions() {
+    try { return JSON.parse(localStorage.getItem('ep_exam_sess') || '{}'); }
+    catch { return {}; }
+  },
+  set examSessions(v) { localStorage.setItem('ep_exam_sess', JSON.stringify(v)); scheduleCloudPush(); },
+  getExamSession(enroll, scheduleId) {
+    return this.examSessions[`${enroll}::${scheduleId}`] || null;
+  },
+  setExamSession(enroll, scheduleId, session) {
+    const all = this.examSessions;
+    all[`${enroll}::${scheduleId}`] = session;
+    this.examSessions = all;
+  },
+  clearExamSession(enroll, scheduleId) {
+    const all = this.examSessions;
+    delete all[`${enroll}::${scheduleId}`];
+    this.examSessions = all;
+  },
+
+  // ── ATTEMPT LOG (prevent re-attempt) ─────────────────────────
+  hasAttempted(enroll, scheduleId) {
+    const res = this.results;
+    return res.some(r => r.enroll === enroll && r.scheduleId === scheduleId);
+  },
+
+  // ── SUBJECTS per dept ─────────────────────────────────────────
+  getSubjects(dept) {
+    try {
+      const all = JSON.parse(localStorage.getItem('ep_subjects') || '{}');
+      return all[dept] || defaultSubjects(dept);
+    } catch { return defaultSubjects(dept); }
+  },
+  setSubjects(dept, subs) {
+    const all = JSON.parse(localStorage.getItem('ep_subjects') || '{}');
+    all[dept] = subs;
+    localStorage.setItem('ep_subjects', JSON.stringify(all));
+    scheduleCloudPush();
+  },
+};
+
+function defSettings() {
+  return {
+    adminPass: 'admin123',
+    subjects: ['Mathematics', 'Physics', 'C Programming', 'Data Structures',
+      'Digital Electronics', 'Thermodynamics', 'Fluid Mechanics',
+      'Circuit Theory', 'Engineering Drawing', 'Strength of Materials']
+  };
+}
+
+function defaultSubjects(dept) {
+  const map = {
+    'Electrical Engineering':   ['Circuit Theory','Electrical Machines','Power Systems','Control Systems','Electromagnetics'],
+    'Mechanical Engineering':   ['Thermodynamics','Fluid Mechanics','Engineering Drawing','Strength of Materials','Manufacturing Processes'],
+    'Computer Engineering':     ['C Programming','Data Structures','Digital Electronics','Database Management','Operating Systems'],
+    'Electronics Engineering':  ['Analog Electronics','Digital Signal Processing','VLSI Design','Communication Systems','Microprocessors'],
+    'Civil Engineering':        ['Structural Analysis','Surveying','Concrete Technology','Geotechnical Engineering','Hydraulics'],
+  };
+  return map[dept] || ['Mathematics', 'Physics'];
+}
+
+const DEPTS = [
+  'Electrical Engineering',
+  'Mechanical Engineering',
+  'Computer Engineering',
+  'Electronics Engineering',
+  'Civil Engineering'
+];
+
+function genSixDigitCode() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+function genPassword(length = 8) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let password = '';
+  for (let i = 0; i < length; i++) {
+    password += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return password;
+}
+function nextStudentId() {
+  const key = 'ep_stu_id_seq';
+  const cur = Math.max(0, Number(localStorage.getItem(key) || '0'));
+  const next = cur + 1;
+  localStorage.setItem(key, String(next));
+  return next;
+}
+function ensureStudentIds() {
+  const key = 'ep_stu_id_seq';
+  const stus = DB.students;
+  if (!stus.length) return;
+  let maxId = 0;
+  stus.forEach(s => {
+    const id = Number(s.id);
+    if (Number.isInteger(id) && id > maxId) maxId = id;
+  });
+  let changed = false;
+  const upd = stus.map(s => {
+    let id = Number(s.id);
+    if (!Number.isInteger(id) || id <= 0) {
+      maxId += 1;
+      id = maxId;
+      changed = true;
+    }
+    return { ...s, id };
+  });
+  if (changed) DB.students = upd;
+  localStorage.setItem(key, String(maxId));
+}
+function genUniqueStudentExamCode(excludeEnroll = '') {
+  const taken = new Set(
+    DB.students
+      .filter(s => s.enroll !== excludeEnroll)
+      .map(s => String(s.examCode || ''))
+      .filter(c => /^\d{6}$/.test(c))
+  );
+  let code = genSixDigitCode();
+  let tries = 0;
+  while (taken.has(code) && tries < 200000) { code = genSixDigitCode(); tries++; }
+  return code;
+}
+function normalizeStudentExamCodes() {
+  const stus = DB.students;
+  if (!stus.length) return;
+  const taken = new Set();
+  let changed = false;
+  const upd = stus.map(s => {
+    let code = String(s.examCode || '').trim();
+    if (!/^\d{6}$/.test(code) || taken.has(code)) {
+      do { code = genSixDigitCode(); } while (taken.has(code));
+      changed = true;
+    }
+    taken.add(code);
+    return { ...s, examCode: code };
+  });
+  if (changed) DB.students = upd;
+}
+ensureStudentIds();
+normalizeStudentExamCodes();
+
+const YEARS = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
+const SEMESTERS = ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5', 'Sem 6', 'Sem 7', 'Sem 8'];
+</script>
+<script>
+/* ══════════════════════════════════════════
+   ExamPortal — Utility Functions
+══════════════════════════════════════════ */
+
+// ── Toast notifications ──────────────────
+let _toastTimer;
+function toast(msg, dur = 3200) {
+  const t = document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.style.opacity = 1;
+  t.style.transform = 'translateY(0)';
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => {
+    t.style.opacity = 0;
+    t.style.transform = 'translateY(10px)';
+  }, dur);
+}
+
+// ── Screen navigation ────────────────────
+function showS(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) el.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ── Modal helpers ────────────────────────
+function openM(id)  { document.getElementById(id)?.classList.add('open'); }
+function closeM(id) { document.getElementById(id)?.classList.remove('open'); }
+
+// Auto-close on backdrop click
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.moverlay').forEach(o => {
+    o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
+  });
+});
+
+// ── Array shuffle ────────────────────────
+function shuffle(arr) { return [...arr].sort(() => Math.random() - .5); }
+
+// ── Grade calculator ─────────────────────
+function calcGrade(pct, passPct) {
+  if (pct >= passPct + 40) return 'A';
+  if (pct >= passPct + 20) return 'B';
+  if (pct >= passPct)      return 'C';
+  return 'F';
+}
+
+// ── Format seconds to "Xm Ys" ───────────
+function fmtTime(secs) {
+  return `${Math.floor(secs / 60)}m ${secs % 60}s`;
+}
+
+// ── Dept short code for badge ────────────
+const DEPT_CODE = {
+  'Electrical Engineering':  'EE',
+  'Mechanical Engineering':  'ME',
+  'Computer Engineering':    'CE',
+  'Electronics Engineering': 'ELE',
+  'Civil Engineering':       'CV',
+};
+
+// ── Dept icon ────────────────────────────
+const DEPT_ICON = {
+  'Electrical Engineering':  '⚡',
+  'Mechanical Engineering':  '⚙️',
+  'Computer Engineering':    '💻',
+  'Electronics Engineering': '📡',
+  'Civil Engineering':       '🏗️',
+};
+
+// ── Generate unique ID ───────────────────
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+}
+
+// ── CSV parser (handles quoted commas) ─────────────────────────────
+function parseCSV(text) {
+  const rows = [];
+  let row = [];
+  let cur = '';
+  let inQuotes = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    const next = text[i + 1];
+    if (ch === '"' && inQuotes && next === '"') {
+      cur += '"'; i++;
+    } else if (ch === '"') {
+      inQuotes = !inQuotes;
+    } else if (ch === ',' && !inQuotes) {
+      row.push(cur.trim()); cur = '';
+    } else if ((ch === '\n' || ch === '\r') && !inQuotes) {
+      if (cur !== '' || row.length) { row.push(cur.trim()); rows.push(row); }
+      row = []; cur = '';
+      if (ch === '\r' && next === '\n') i++;
+    } else {
+      cur += ch;
+    }
+  }
+  if (cur !== '' || row.length) { row.push(cur.trim()); rows.push(row); }
+  return rows.filter(r => r.some(c => c !== ''));
+}
+
+// ── Pick questions from pool (chapter-weighted) ──────────────────
+function pickQuestionsFromPool(pool, needed, chapters) {
+  if (!chapters || !chapters.length) {
+    return shuffle(pool).slice(0, needed);
+  }
+  const totalChapMarks = chapters.reduce((a, c) => a + parseFloat(c.marks || 0), 0);
+  if (totalChapMarks <= 0) return shuffle(pool).slice(0, needed);
+
+  const chapAlloc = chapters.map(c => ({
+    chap: c,
+    count: Math.floor((parseFloat(c.marks || 0) / totalChapMarks) * needed)
+  }));
+  // distribute remainder
+  let assigned = chapAlloc.reduce((a, x) => a + x.count, 0);
+  const surplus = needed - assigned;
+  const sorted = [...chapAlloc].sort((a, b) => b.chap.marks - a.chap.marks);
+  for (let i = 0; i < surplus; i++) sorted[i % sorted.length].count++;
+
+  let picked = [];
+  chapAlloc.forEach(({ chap, count }) => {
+    const chapPool = pool.filter(q => q.chapter === chap.name);
+    picked.push(...shuffle(chapPool).slice(0, count));
+  });
+
+  // fill deficit from uncategorised
+  if (picked.length < needed) {
+    const used = new Set(picked.map(q => q.text));
+    const extra = shuffle(pool.filter(q => !used.has(q.text))).slice(0, needed - picked.length);
+    picked.push(...extra);
+  }
+  return picked.slice(0, needed);
+}
+
+// ── Schedule status helper ───────────────
+function getScheduleStatus(sched) {
+  const now = Date.now();
+  const start = new Date(sched.startTime).getTime();
+  const end   = new Date(sched.endTime).getTime();
+  if (now < start) return 'upcoming';
+  if (now > end)   return 'expired';
+  return 'active';
+}
+
+function getAllowedChapters(cfg, dept, subject) {
+  const chaps = DB.getChapters(dept, subject);
+  if (cfg && cfg.chaptersSelected && cfg.chaptersSelected.length) {
+    return chaps.filter(c => cfg.chaptersSelected.includes(c.name));
+  }
+  return chaps;
+}
+function filterPoolByChapters(pool, cfg) {
+  if (!cfg || !cfg.chaptersSelected || !cfg.chaptersSelected.length) return pool;
+  const set = new Set(cfg.chaptersSelected);
+  return pool.filter(q => set.has(q.chapter));
+}
+</script>
+<script>
+/* ══════════════════════════════════════════
+   ExamPortal v6 — Main Application Logic
+   app.js — depends on db.js + utils.js
+══════════════════════════════════════════ */
+
+/* ─── Modal backdrop close ─── */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.moverlay').forEach(o => {
+    o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
+  });
+});
+
+/* ════════════════════════════════════════
+   ADMIN LOGIN
+════════════════════════════════════════ */
+const SESSION_KEY = 'ep_session';
+function saveSession(role, id = '') {
+  try { localStorage.setItem(SESSION_KEY, JSON.stringify({ role, id })); } catch {}
+}
+function clearSession() {
+  try { localStorage.removeItem(SESSION_KEY); } catch {}
+}
+function applyFacultySession(fac) {
+  currentFaculty = fac;
+  document.getElementById('facNavTag').textContent     = `${fac.name} � ID: ${fac.id}`;
+  document.getElementById('facWelcomeName').textContent = fac.name;
+  document.getElementById('facWelcomeDept').textContent = 'Dept: ' + fac.depts.join(', ');
+  document.getElementById('facWelcomeAccess').textContent =
+    'Subjects: ' + (fac.subjects && fac.subjects.length ? fac.subjects.join(', ') : 'All');
+  document.getElementById('facWelcomeId').textContent   = fac.id;
+  document.getElementById('facResultSub').textContent   =
+    `Filtered for: ${fac.depts.join(', ')} � ${fac.subjects && fac.subjects.length ? fac.subjects.join(', ') : 'All subjects'}`;
+  const sel = document.getElementById('facRFDept');
+  sel.innerHTML = '<option value="">All My Departments</option>';
+  fac.depts.forEach(d => {
+    const o = document.createElement('option'); o.value = d; o.textContent = d; sel.appendChild(o);
+  });
+  populateFacSubjects();
+  populateFacResetSchedules();
+  showS('s-faculty');
+  renderFacResults();
+}
+function applyStudentSession(s) {
+  currentStudent = { name: s.name, enroll: s.enroll, section: s.section, branch: s.branch, year: s.year, examCode: s.examCode };
+  document.getElementById('stuNavTag').textContent      = `${s.enroll}`;
+  document.getElementById('stuWelcomeName').textContent = `Welcome`;
+  document.getElementById('stuWelcomeInfo').textContent =
+    `${s.branch} � ${s.year} � ${s.enroll}`;
+  showS('s-stu-dash');
+  renderStuDash();
+}
+function restoreSession() {
+  let raw = null;
+  try { raw = localStorage.getItem(SESSION_KEY); } catch {}
+  if (!raw) return;
+  let sess = null;
+  try { sess = JSON.parse(raw); } catch { sess = null; }
+  if (!sess || !sess.role) return;
+  if (sess.role === 'admin') {
+    showS('s-admin');
+    refreshAdmin();
+    return;
+  }
+  if (sess.role === 'faculty') {
+    const fac = DB.faculty.find(f => f.id === sess.id);
+    if (fac) { applyFacultySession(fac); return; }
+  }
+  if (sess.role === 'student') {
+    const stu = DB.students.find(s => s.enroll === sess.id);
+    if (stu) { applyStudentSession(stu); return; }
+  }
+  clearSession();
+}
+function adminLogin() {
+  const u = document.getElementById('aUser').value.trim();
+  const p = document.getElementById('aPass').value.trim();
+  const s = DB.settings;
+  if (u === 'admin' && p === (s.adminPass || 'admin123')) {
+    document.getElementById('aErr').style.display = 'none';
+    saveSession('admin');
+    showS('s-admin'); refreshAdmin();
+  } else {
+    document.getElementById('aErr').style.display = 'block';
+  }
+}
+
+function refreshAdmin() {
+  renderPaperBank();
+  renderFaculty();
+  renderStudents();
+  renderResults();
+  renderSchedules();
+}
+
+function saveAdminPass() {
+  const v = document.getElementById('sAdminPass').value.trim();
+  if (!v) { toast('⚠️ Enter a new password.'); return; }
+  const s = DB.settings; s.adminPass = v; DB.settings = s;
+  document.getElementById('sAdminPass').value = '';
+  toast('✅ Admin password updated!');
+}
+
+/* ════════════════════════════════════════
+   FACULTY LOGIN
+════════════════════════════════════════ */
+let currentFaculty = null;
+function facultyLogin() {
+  const id   = document.getElementById('fUser').value.trim();
+  const pass = document.getElementById('fPass').value.trim();
+  const fac  = DB.faculty.find(f => f.id === id && f.password === pass);
+  if (!fac) { document.getElementById('fErr').style.display = 'block'; return; }
+  document.getElementById('fErr').style.display = 'none';
+  saveSession('faculty', fac.id);
+  applyFacultySession(fac);
+}
+
+function onFacDeptChange() {
+  populateFacSubjects();
+  renderFacResults();
+}
+
+function populateFacSubjects() {
+  if (!currentFaculty) return;
+  const dept = document.getElementById('facRFDept')?.value || '';
+  const sel = document.getElementById('facRFSubject');
+  if (!sel) return;
+  let subjects = [];
+  if (dept) {
+    subjects = DB.getSubjects(dept);
+  } else {
+    const all = new Set();
+    currentFaculty.depts.forEach(d => DB.getSubjects(d).forEach(s => all.add(s)));
+    subjects = Array.from(all);
+  }
+  if (currentFaculty.subjects && currentFaculty.subjects.length) {
+    subjects = subjects.filter(s => currentFaculty.subjects.includes(s));
+  }
+  const prev = sel.value;
+  sel.innerHTML = '<option value="">All My Subjects</option>' +
+    subjects.map(s => `<option>${s}</option>`).join('');
+  if (subjects.includes(prev)) sel.value = prev;
+}
+
+function populateFacResetSchedules() {
+  const sel = document.getElementById('facResetSched');
+  if (!sel || !currentFaculty) return;
+  const list = DB.schedules.filter(sc => {
+    if (!currentFaculty.depts.includes(sc.dept)) return false;
+    if (currentFaculty.subjects && currentFaculty.subjects.length && !currentFaculty.subjects.includes(sc.subject)) return false;
+    return true;
+  });
+  sel.innerHTML = '<option value="">Select Schedule</option>' + list.map(sc =>
+    `<option value="${sc.id}">${sc.subject} | ${sc.dept} | ${new Date(sc.startTime).toLocaleString('en-IN')}</option>`
+  ).join('');
+}
+
+function resetStudentExamAccess() {
+  if (!currentFaculty) { toast('⚠️ Login required.'); return; }
+  const enroll = (document.getElementById('facResetEnroll')?.value || '').trim();
+  const scheduleId = document.getElementById('facResetSched')?.value || '';
+  if (!enroll || !scheduleId) { toast('⚠️ Enter enrollment and select schedule.'); return; }
+
+  const stu = DB.students.find(s => s.enroll === enroll);
+  if (!stu) { toast('⚠️ Student not found.'); return; }
+  if (!currentFaculty.depts.includes(stu.branch)) { toast('⛔ No access for this student department.'); return; }
+
+  const sc = DB.schedules.find(s => s.id === scheduleId);
+  if (!sc) { toast('⚠️ Schedule not found.'); return; }
+  if (!currentFaculty.depts.includes(sc.dept)) { toast('⛔ No access for this schedule department.'); return; }
+
+  const hadSession = !!DB.getExamSession(enroll, scheduleId);
+  DB.clearExamSession(enroll, scheduleId);
+
+  if (DB.hasAttempted(enroll, scheduleId)) {
+    const ok = confirm('Submitted result exists for this schedule. Remove it and allow reattempt?');
+    if (ok) {
+      DB.results = DB.results.filter(r => !(r.enroll === enroll && r.scheduleId === scheduleId));
+      toast('✅ Session reset and reattempt unlocked.');
+      renderFacResults();
+      renderResults();
+      return;
+    }
+  }
+  toast(hadSession ? '✅ In-progress exam session reset.' : '✅ Reset complete.');
+}
+
+function regenerateStudentExamCode() {
+  if (!currentFaculty) { toast('⚠️ Login required.'); return; }
+  const enroll = (document.getElementById('facResetEnroll')?.value || '').trim();
+  if (!enroll) { toast('⚠️ Enter enrollment number.'); return; }
+  const stu = DB.students.find(s => s.enroll === enroll);
+  if (!stu) { toast('⚠️ Student not found.'); return; }
+  if (!currentFaculty.depts.includes(stu.branch)) { toast('⛔ No access for this student department.'); return; }
+
+  const newCode = genUniqueStudentExamCode(stu.enroll);
+  DB.students = DB.students.map(s => s.enroll === enroll ? { ...s, examCode: newCode } : s);
+  renderStudents();
+  toast(`✅ New code for ${stu.name} (${enroll}): ${newCode}`);
+}
+
+function regenerateAllExamCodesForAccess() {
+  if (!currentFaculty) { toast('⚠️ Login required.'); return; }
+  const allowed = DB.students.filter(s => currentFaculty.depts.includes(s.branch));
+  if (!allowed.length) { toast('⚠️ No students found in your departments.'); return; }
+  if (!confirm(`Generate new unique 6-digit exam codes for ${allowed.length} students in your departments?`)) return;
+
+  const all = DB.students;
+  const untouchedCodes = new Set(
+    all
+      .filter(s => !currentFaculty.depts.includes(s.branch))
+      .map(s => String(s.examCode || ''))
+      .filter(c => /^\d{6}$/.test(c))
+  );
+  const used = new Set(untouchedCodes);
+  const updated = all.map(s => {
+    if (!currentFaculty.depts.includes(s.branch)) return s;
+    let code = genSixDigitCode();
+    while (used.has(code)) code = genSixDigitCode();
+    used.add(code);
+    return { ...s, examCode: code };
+  });
+  DB.students = updated;
+  renderStudents();
+  toast(`✅ Generated unique exam codes for ${allowed.length} students.`);
+}
+
+function getFacFilteredResults() {
+  if (!currentFaculty) return [];
+  const dept   = document.getElementById('facRFDept').value;
+  const subject = document.getElementById('facRFSubject')?.value || '';
+  const grade  = document.getElementById('facRFGrade').value;
+  const search = (document.getElementById('facRFSearch').value || '').toLowerCase();
+  return DB.results.filter(r => {
+    if (!currentFaculty.depts.includes(r.branch)) return false;
+    if (currentFaculty.subjects && currentFaculty.subjects.length &&
+        !currentFaculty.subjects.includes(r.subject)) return false;
+    if (dept   && r.branch !== dept)  return false;
+    if (subject && r.subject !== subject) return false;
+    if (grade  && r.grade  !== grade) return false;
+    if (search && !r.name.toLowerCase().includes(search) &&
+                  !r.enroll.toLowerCase().includes(search)) return false;
+    return true;
+  });
+}
+
+function renderFacResults() {
+  const results = getFacFilteredResults();
+  const pp  = 40;
+  const passed = results.filter(r => r.score >= pp).length;
+  const avg = results.length
+    ? (results.reduce((a, r) => a + r.score, 0) / results.length).toFixed(1) : 0;
+  document.getElementById('facStatsMini').innerHTML = `
+    <div class="sm"><div class="sv">${results.length}</div><div class="sk">Total</div></div>
+    <div class="sm sm-ok"><div class="sv">${passed}</div><div class="sk">Passed</div></div>
+    <div class="sm sm-red"><div class="sv">${results.length - passed}</div><div class="sk">Failed</div></div>
+    <div class="sm sm-pri"><div class="sv">${avg}%</div><div class="sk">Avg Score</div></div>`;
+  renderResultsInto('facResTbody', results);
+}
+function exportFacExcel() { exportExcel(getFacFilteredResults(), `Faculty_${currentFaculty?.id || ''}`); }
+
+/* ════════════════════════════════════════
+   STUDENT LOGIN + DASHBOARD
+════════════════════════════════════════ */
+let currentStudent = null;
+function studentLogin() {
+  const enroll = document.getElementById('sUser').value.trim();
+  const pass   = document.getElementById('sPass').value.trim();
+  const s = DB.students.find(s => s.enroll === enroll && s.password === pass);
+  if (!s) { document.getElementById('sErr').style.display = 'block'; return; }
+  document.getElementById('sErr').style.display = 'none';
+  saveSession('student', s.enroll);
+  applyStudentSession(s);
+}
+
+function renderStuDash() {
+  if (!currentStudent) return;
+  const { branch, year, section, enroll } = currentStudent;
+  const now = Date.now();
+  // Get schedules for this student's dept & year
+  const mySchedules = DB.schedules.filter(sc => {
+    if (sc.dept !== branch) return false;
+    if (sc.year && sc.year !== year) return false;
+    if (sc.section && sc.section.trim() !== '' && section && sc.section !== section) return false;
+    return true;
+  });
+
+  const el = document.getElementById('stuExamList');
+  if (!mySchedules.length) {
+    el.innerHTML = `<div class="empty"><div class="ei">📋</div><div class="et">No exams scheduled for your department yet.</div></div>`;
+    return;
+  }
+
+  el.innerHTML = mySchedules.map(sc => {
+    const status    = getScheduleStatus(sc);
+    const attempted = DB.hasAttempted(enroll, sc.id);
+    const start     = new Date(sc.startTime).toLocaleString('en-IN');
+    const end       = new Date(sc.endTime).toLocaleString('en-IN');
+    const cfg       = DB.getPaperConfig(sc.dept, sc.subject);
+    const poolAll   = DB.getQuestions(sc.dept, sc.subject);
+    const poolQ     = filterPoolByChapters(poolAll, cfg).length;
+    const needed    = cfg ? cfg.qCount : 0;
+    const ready     = poolQ >= needed;
+    const canResume = !!DB.getExamSession(enroll, sc.id);
+
+    let statusHtml = '';
+    if (attempted) statusHtml = `<span class="badge badge-ok">✅ Attempted</span>`;
+    else if (status === 'active')    statusHtml = `<span class="sched-status ss-active">🟢 Live Now</span>`;
+    else if (status === 'upcoming')  statusHtml = `<span class="sched-status ss-upcoming">🔵 Upcoming</span>`;
+    else                             statusHtml = `<span class="sched-status ss-expired">⚫ Expired</span>`;
+
+    let actionBtn = '';
+    if (!attempted && status === 'active' && ready) {
+      actionBtn = `<button class="btn btn-ok btn-sm" onclick="startStudentExam('${sc.id}')">${canResume ? 'Resume Exam ↺' : 'Start Exam →'}</button>`;
+    } else if (!attempted && status === 'active' && !ready) {
+      actionBtn = `<span style="font-size:.74rem;color:var(--red)">⚠️ Paper not ready</span>`;
+    }
+
+    return `
+      <div class="stu-exam-card ${attempted ? 'attempted' : status === 'active' ? 'live' : ''}">
+        <div class="sec-left">
+          <div class="sec-subject">${sc.title || sc.subject}</div>
+          <div class="sec-dept">${sc.dept} · ${sc.year || 'All Years'}${sc.section ? ' · Sec ' + sc.section : ''}</div>
+          <div class="sec-time">🕐 ${start} → ${end}</div>
+          ${cfg ? `<div style="font-size:.72rem;color:var(--mu);margin-top:.3rem">${cfg.qCount}Q · ${cfg.qCount * cfg.marksPerQ}M · ${cfg.duration}min</div>` : ''}
+        </div>
+        <div class="sec-right">
+          ${statusHtml}
+          ${actionBtn}
+          ${attempted ? `<span style="font-size:.72rem;color:var(--mu)">Already submitted</span>` : ''}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function startStudentExam(scheduleId) {
+  const sc = DB.schedules.find(s => s.id === scheduleId);
+  if (!sc) { toast('⚠️ Schedule not found.'); return; }
+  if (getScheduleStatus(sc) !== 'active') { toast('⚠️ Exam is not active right now.'); return; }
+  if (DB.hasAttempted(currentStudent.enroll, scheduleId)) {
+    toast('⚠️ You have already attempted this exam.'); return;
+  }
+  const stu = DB.students.find(s => s.enroll === currentStudent.enroll);
+  if (!stu) { toast('⚠️ Student record not found.'); return; }
+  if (!stu.examCode || !/^\d{6}$/.test(stu.examCode)) {
+    stu.examCode = genUniqueStudentExamCode(stu.enroll);
+    DB.students = DB.students.map(s => s.enroll === stu.enroll ? { ...s, examCode: stu.examCode } : s);
+  }
+  const enteredCode = (prompt('Enter your 6-digit exam code to start/resume exam:') || '').trim();
+  if (!enteredCode) return;
+  if (enteredCode !== stu.examCode) { toast('⚠️ Invalid 6-digit exam code.'); return; }
+
+  const cfg = DB.getPaperConfig(sc.dept, sc.subject);
+  if (!cfg) { toast('⚠️ Paper configuration missing.'); return; }
+  const poolAll = DB.getQuestions(sc.dept, sc.subject);
+  const pool = filterPoolByChapters(poolAll, cfg);
+  if (pool.length < cfg.qCount) {
+    toast(`⚠️ Exam not ready. Pool has ${pool.length}/${cfg.qCount} questions.`); return;
+  }
+  const saved = DB.getExamSession(currentStudent.enroll, scheduleId);
+  currentExamScheduleId = scheduleId;
+  currentStudent.subject   = sc.subject;
+  currentStudent.scheduleId = scheduleId;
+  if (saved && saved.questions?.length) {
+    startExam(cfg, pool, saved);
+  } else {
+    startExam(cfg, pool);
+  }
+}
+
+/* ════════════════════════════════════════
+   PAPER BANK
+════════════════════════════════════════ */
+function renderPaperBank() {
+  const deptF = document.getElementById('pbDeptFilter')?.value || '';
+  const cfgs  = DB.getAllPaperConfigs();
+  const grid  = document.getElementById('paperBankGrid');
+  if (!grid) return;
+
+  const keys = Object.keys(cfgs).filter(k => {
+    if (!deptF) return true;
+    return k.startsWith(deptF + '::');
+  });
+
+  if (!keys.length) {
+    grid.innerHTML = `
+      <div class="no-paper" style="grid-column:1/-1">
+        <div style="font-size:2rem;margin-bottom:.6rem">📄</div>
+        <div style="font-size:.98rem;font-weight:700;margin-bottom:.35rem">No Papers Created Yet</div>
+        <div style="font-size:.81rem;color:var(--mu);margin-bottom:1.1rem">Create department × subject papers using the wizard.</div>
+        <button class="btn btn-pri" onclick="showS('s-wizard');wStep=0;wGo(1)">+ Setup New Paper</button>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = keys.map(k => {
+    const [dept, subject] = k.split('::');
+    const cfg = cfgs[k];
+    const pool = DB.getQuestions(dept, subject);
+    const chaps = DB.getChapters(dept, subject);
+    const schedCount = DB.schedules.filter(s => s.dept === dept && s.subject === subject).length;
+    const code = DEPT_CODE[dept] || 'GEN';
+    const icon = DEPT_ICON[dept] || '📄';
+    const ready = pool.length >= cfg.qCount;
+    return `
+      <div class="paper-bank-card${ready ? ' active-paper' : ''}">
+        <div class="pb-dept">${icon} ${dept}</div>
+        <div class="pb-subj">${subject}</div>
+        <div class="pb-meta">
+          <span class="badge ${ready ? 'badge-ok' : 'badge-red'}">${pool.length}/${cfg.qCount} Q</span>
+          <span class="badge badge-teal">${cfg.qCount * cfg.marksPerQ}M</span>
+          <span class="badge badge-pur">${cfg.duration}min</span>
+          ${chaps.length ? `<span class="badge badge-ora">${chaps.length} chapters</span>` : ''}
+          ${schedCount ? `<span class="badge badge-ok">${schedCount} scheduled</span>` : ''}
+        </div>
+        <div class="pb-actions">
+          <button class="btn btn-pri btn-sm" onclick="loadQBFromBank('${dept}','${subject}')">📝 Questions</button>
+          <button class="btn btn-ghost btn-sm" onclick="loadChapFromBank('${dept}','${subject}')">📖 Chapters</button>
+          <button class="btn btn-red btn-sm" onclick="deletePaper('${dept}','${subject}')">🗑</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function deletePaper(dept, subject) {
+  if (!confirm(`Delete paper "${subject}" (${dept})? Questions + chapters will also be deleted.`)) return;
+  DB.deletePaperConfig(dept, subject);
+  DB.setQuestions(dept, subject, []);
+  DB.setChapters(dept, subject, []);
+  renderPaperBank(); toast('🗑 Paper deleted.');
+}
+
+function loadQBFromBank(dept, subject) {
+  swTab('questions', document.querySelector('.tbtn:nth-child(2)'));
+  document.getElementById('qbDeptSel').value = dept;
+  qbSubjPopulate(dept);
+  setTimeout(() => {
+    document.getElementById('qbSubjSel').value = subject;
+    loadQB();
+  }, 50);
+}
+function loadChapFromBank(dept, subject) {
+  swTab('chapters', document.querySelector('.tbtn:nth-child(3)'));
+  document.getElementById('chapDeptSel').value = dept;
+  chapSubjPopulate(dept);
+  setTimeout(() => {
+    document.getElementById('chapSubjSel').value = subject;
+    loadChaptersForPaper();
+  }, 50);
+}
+
+/* ════════════════════════════════════════
+   WIZARD
+════════════════════════════════════════ */
+let wStep = 1, wDept = '', wSubj = '';
+function wGo(n) {
+  wStep = n;
+  [1, 2, 3, 4].forEach(i => {
+    document.getElementById(`ws${i}`).className = 'wst' + (i < n ? ' done' : i === n ? ' active' : '');
+    const l = document.getElementById(`wl${i}`); if (l) l.className = 'wline' + (i < n ? ' done' : '');
+    document.getElementById(`wp${i}`).className = 'wpage' + (i === n ? ' active' : '');
+  });
+  const titles = [, 'Select Department', 'Select Subject', 'Paper Config', 'Exam Options'];
+  document.getElementById('wTitle').textContent = titles[n];
+  if (n === 2) populateSubPick();
+  if (n === 4) document.getElementById('cfgSum').textContent =
+    `${wDept} · ${wSubj} · ${document.getElementById('cfgQ').value}Q · ${Math.round(parseFloat(document.getElementById('cfgQ').value) * parseFloat(document.getElementById('cfgM').value) * 100) / 100}M`;
+}
+function selDept(card, name) {
+  document.querySelectorAll('.dept-card').forEach(c => c.classList.remove('sel'));
+  card.classList.add('sel'); wDept = name;
+  document.getElementById('wn1').disabled = false;
+}
+function populateSubPick() {
+  const subs = DB.getSubjects(wDept);
+  document.getElementById('subPickGrid').innerHTML = subs.map(s =>
+    `<div class="sub-chip${s === wSubj ? ' sel' : ''}" onclick="selSubj(this,'${s.replace(/'/g, '&#39;')}')">${s}</div>`
+  ).join('');
+  document.getElementById('wn2').disabled = !wSubj;
+}
+function selSubj(el, name) {
+  document.querySelectorAll('.sub-chip').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel'); wSubj = name; document.getElementById('wn2').disabled = false;
+}
+function calcTotal() {
+  const q = parseFloat(document.getElementById('cfgQ').value) || 0;
+  const m = parseFloat(document.getElementById('cfgM').value) || 0;
+  document.getElementById('calcDisp').textContent = Math.round(q * m * 100) / 100;
+}
+function openManageSubW() {
+  document.getElementById('mSubDeptLabel').textContent = wDept;
+  renderMSubTags(wDept); openM('m-subjects');
+}
+function renderMSubTags(dept) {
+  const subs = DB.getSubjects(dept);
+  document.getElementById('mSubTags').innerHTML = subs.map((s, i) =>
+    `<span class="sub-tag">${s}<button class="rx" onclick="removeSubAt(${i},'${dept}')">×</button></span>`
+  ).join('');
+}
+function addSubM() {
+  const v = document.getElementById('mSubInp').value.trim(); if (!v) return;
+  const dept = document.getElementById('mSubDeptLabel').textContent;
+  const subs = DB.getSubjects(dept);
+  if (subs.includes(v)) { toast('Already exists.'); return; }
+  subs.push(v); DB.setSubjects(dept, subs);
+  document.getElementById('mSubInp').value = '';
+  renderMSubTags(dept); populateSubPick(); toast(`✅ "${v}" added.`);
+}
+function removeSubAt(i, dept) {
+  const subs = DB.getSubjects(dept); subs.splice(i, 1); DB.setSubjects(dept, subs);
+  renderMSubTags(dept); populateSubPick();
+}
+function createPaper() {
+  if (!wDept || !wSubj) { toast('⚠️ Select dept and subject.'); return; }
+  const existing = DB.getPaperConfig(wDept, wSubj);
+  const cfg = {
+    dept: wDept, subject: wSubj,
+    title: `${wSubj} — ${wDept}`,
+    qCount: parseInt(document.getElementById('cfgQ').value) || 60,
+    marksPerQ: parseFloat(document.getElementById('cfgM').value) || 1,
+    duration: parseInt(document.getElementById('cfgDur').value) || 60,
+    passPct: parseInt(document.getElementById('cfgPass').value) || 40,
+    shuffle: document.getElementById('cfgSh').checked,
+    shuffleOpts: document.getElementById('cfgShO').checked,
+    negative: document.getElementById('cfgNeg').checked,
+    createdAt: new Date().toLocaleString('en-IN'),
+    chaptersSelected: existing?.chaptersSelected || [],
+  };
+  if (existing && !confirm(`A paper for "${wSubj}" (${wDept}) already exists. Overwrite config? (Questions are kept)`)) return;
+  DB.setPaperConfig(wDept, wSubj, cfg);
+  toast(`✅ Paper created! Add questions now.`);
+  showS('s-admin');
+  swTab('questions', document.querySelector('.tbtn:nth-child(2)'));
+  document.getElementById('qbDeptSel').value = wDept;
+  qbSubjPopulate(wDept);
+  setTimeout(() => { document.getElementById('qbSubjSel').value = wSubj; loadQB(); }, 50);
+  refreshAdmin();
+}
+
+/* ════════════════════════════════════════
+   QUESTION BANK — per paper
+════════════════════════════════════════ */
+let _qbDept = '', _qbSubj = '';
+
+function qbSubjPopulate(dept) {
+  dept = dept || document.getElementById('qbDeptSel').value;
+  _qbDept = dept;
+  const sel = document.getElementById('qbSubjSel'); sel.innerHTML = '<option value="">— Subject —</option>';
+  if (!dept) return;
+  const cfgs = DB.getAllPaperConfigs();
+  Object.keys(cfgs).filter(k => k.startsWith(dept + '::')).forEach(k => {
+    const subj = k.split('::')[1];
+    const o = document.createElement('option'); o.value = subj; o.textContent = subj; sel.appendChild(o);
+  });
+  // Also load subjects available (even without paper)
+  DB.getSubjects(dept).forEach(subj => {
+    if (!sel.querySelector(`option[value="${subj}"]`)) {
+      const o = document.createElement('option'); o.value = subj; o.textContent = subj + ' (no paper)';
+      sel.appendChild(o);
+    }
+  });
+}
+
+function loadQB() {
+  _qbDept = document.getElementById('qbDeptSel').value;
+  _qbSubj = document.getElementById('qbSubjSel').value;
+  const cfg = _qbDept && _qbSubj ? DB.getPaperConfig(_qbDept, _qbSubj) : null;
+  const pib = document.getElementById('pib');
+  const form = document.getElementById('addQForm');
+  const listSec = document.getElementById('qListSec');
+  if (!cfg) {
+    pib.style.display = 'none';
+    form.style.display = 'none';
+    listSec.style.display = 'none';
+    document.getElementById('qbSub').textContent = _qbDept && _qbSubj ? 'No paper config for this subject. Create it first.' : 'Select a paper above.';
+    return;
+  }
+  pib.style.display = 'flex';
+  form.style.display = 'block';
+  listSec.style.display = 'block';
+  document.getElementById('pibDept').textContent = cfg.dept;
+  document.getElementById('pibSubj').textContent = cfg.subject;
+  document.getElementById('pibQ').textContent    = cfg.qCount;
+  document.getElementById('pibMpq').textContent  = cfg.marksPerQ;
+  document.getElementById('pibTot').textContent  = Math.round(cfg.qCount * cfg.marksPerQ * 100) / 100;
+  document.getElementById('pibDur').textContent  = cfg.duration + 'min';
+  document.getElementById('qbSub').textContent   =
+    `${cfg.dept} · ${cfg.subject} · ${cfg.qCount}Q × ${cfg.marksPerQ}M = ${Math.round(cfg.qCount * cfg.marksPerQ * 100) / 100} marks`;
+  updateChapterDropdown();
+  renderQuestions();
+  updPoolBar();
+  const qCsvCard = document.getElementById('qCsvCard');
+  const chapCard = document.getElementById('paperChapCard');
+  if (qCsvCard) qCsvCard.style.display = (_qbDept && _qbSubj) ? 'block' : 'none';
+  if (chapCard) chapCard.style.display = (_qbDept && _qbSubj) ? 'block' : 'none';
+  renderPaperChapterSelect();
+}
+
+function addQ() {
+  if (!_qbDept || !_qbSubj) { toast('⚠️ Select a paper first.'); return; }
+  const txt  = document.getElementById('qTxt').value.trim();
+  const opts = [0, 1, 2, 3].map(i => document.getElementById(`o${i}`).value.trim());
+  const corr = parseInt(document.getElementById('qCorr').value);
+  const chap = document.getElementById('qChapter').value || '';
+  if (!txt || opts.some(o => !o)) { toast('⚠️ Fill question and all 4 options.'); return; }
+  const qs = DB.getQuestions(_qbDept, _qbSubj);
+  qs.push({ text: txt, options: opts, correct: corr, chapter: chap });
+  DB.setQuestions(_qbDept, _qbSubj, qs);
+  document.getElementById('qTxt').value = '';
+  [0, 1, 2, 3].forEach(i => document.getElementById(`o${i}`).value = '');
+  document.getElementById('qCorr').value = '0';
+  document.getElementById('qTxt').focus();
+  renderQuestions(); updPoolBar();
+  const cfg = DB.getPaperConfig(_qbDept, _qbSubj);
+  toast(`✅ Q${qs.length} added (paper needs ${cfg?.qCount || '?'})`);
+}
+
+function deleteQ(i) {
+  if (!confirm('Delete this question?')) return;
+  const qs = DB.getQuestions(_qbDept, _qbSubj);
+  qs.splice(i, 1); DB.setQuestions(_qbDept, _qbSubj, qs);
+  renderQuestions(); updPoolBar(); toast('🗑 Deleted.');
+}
+
+function openEditQ(i) {
+  const qs = DB.getQuestions(_qbDept, _qbSubj); const q = qs[i];
+  document.getElementById('editQKey').value = `${_qbDept}::${_qbSubj}::${i}`;
+  document.getElementById('eqTxt').value = q.text;
+  [0, 1, 2, 3].forEach(j => document.getElementById(`eo${j}`).value = q.options[j] || '');
+  document.getElementById('eCorr').value = q.correct;
+  openM('m-editq');
+}
+
+function saveEditQ() {
+  const key  = document.getElementById('editQKey').value;
+  const [dept, subj, idxStr] = key.split('::'); const i = parseInt(idxStr);
+  const txt  = document.getElementById('eqTxt').value.trim();
+  const opts = [0, 1, 2, 3].map(j => document.getElementById(`eo${j}`).value.trim());
+  const corr = parseInt(document.getElementById('eCorr').value);
+  if (!txt || opts.some(o => !o)) { toast('⚠️ Fill all fields.'); return; }
+  const qs = DB.getQuestions(dept, subj);
+  qs[i] = { ...qs[i], text: txt, options: opts, correct: corr };
+  DB.setQuestions(dept, subj, qs);
+  closeM('m-editq'); renderQuestions(); toast('✅ Updated!');
+}
+
+function clearAllQ() {
+  if (!confirm('Delete ALL questions from this pool?')) return;
+  DB.setQuestions(_qbDept, _qbSubj, []);
+  renderQuestions(); updPoolBar(); toast('🗑 Pool cleared.');
+}
+
+function renderPaperChapterSelect() {
+  const wrap = document.getElementById('paperChapSel');
+  if (!wrap) return;
+  if (!_qbDept || !_qbSubj) { wrap.innerHTML = '<div style="color:var(--mu)">Select a paper above.</div>'; return; }
+  const cfg = DB.getPaperConfig(_qbDept, _qbSubj);
+  if (!cfg) { wrap.innerHTML = '<div style="color:var(--mu)">Create a paper to enable selection.</div>'; return; }
+  const chaps = DB.getChapters(_qbDept, _qbSubj);
+  if (!chaps.length) { wrap.innerHTML = '<div style="color:var(--mu)">Add chapters in the Chapters tab.</div>'; return; }
+  const selected = new Set((cfg.chaptersSelected || []).map(String));
+  wrap.innerHTML = chaps.map(c => {
+    const checked = selected.has(c.name) ? 'checked' : '';
+    return `<label style="display:flex;gap:.4rem;align-items:center;font-size:.78rem">
+      <input type="checkbox" value="${c.name.replace(/\"/g, '&quot;')}" ${checked}/>
+      <span>${c.name}</span>
+    </label>`;
+  }).join('');
+}
+
+function savePaperChapterSelection() {
+  if (!_qbDept || !_qbSubj) { toast('⚠️ Select a paper first.'); return; }
+  const cfg = DB.getPaperConfig(_qbDept, _qbSubj);
+  if (!cfg) { toast('⚠️ Create a paper first.'); return; }
+  const selected = [...document.querySelectorAll('#paperChapSel input:checked')].map(i => i.value);
+  cfg.chaptersSelected = selected;
+  DB.setPaperConfig(_qbDept, _qbSubj, cfg);
+  toast(`✅ Saved ${selected.length} chapter(s) for paper.`);
+}
+function clearPaperChapterSelection() {
+  if (!_qbDept || !_qbSubj) return;
+  const cfg = DB.getPaperConfig(_qbDept, _qbSubj);
+  if (!cfg) return;
+  cfg.chaptersSelected = [];
+  DB.setPaperConfig(_qbDept, _qbSubj, cfg);
+  renderPaperChapterSelect();
+}
+function selectAllPaperChapters() {
+  if (!_qbDept || !_qbSubj) return;
+  document.querySelectorAll('#paperChapSel input[type="checkbox"]').forEach(i => i.checked = true);
+}
+
+function uploadQuestionsCSV() {
+  if (!_qbDept || !_qbSubj) { toast('⚠️ Select a paper first.'); return; }
+  const file = document.getElementById('qCsvFile')?.files?.[0];
+  if (!file) { toast('⚠️ Choose a CSV file.'); return; }
+  const reader = new FileReader();
+  reader.onload = () => {
+    const rows = parseCSV(String(reader.result || ''));
+    if (!rows.length) { toast('⚠️ CSV is empty.'); return; }
+    const header = rows[0].map(x => x.toLowerCase());
+    const hasHeader = header.includes('question') || header.includes('option1') || header.includes('chapter');
+    const data = hasHeader ? rows.slice(1) : rows;
+    const qs = DB.getQuestions(_qbDept, _qbSubj);
+    const chaps = DB.getChapters(_qbDept, _qbSubj);
+    const chapNames = new Set(chaps.map(c => c.name));
+    let added = 0;
+    data.forEach(r => {
+      const [chapter, question, o1, o2, o3, o4, corrRaw] = r;
+      if (!question || !o1 || !o2 || !o3 || !o4) return;
+      let corr = String(corrRaw || '0').trim().toUpperCase();
+      if (corr === 'A') corr = 0;
+      else if (corr === 'B') corr = 1;
+      else if (corr === 'C') corr = 2;
+      else if (corr === 'D') corr = 3;
+      else {
+        const n = parseInt(corr, 10);
+        corr = isNaN(n) ? 0 : (n >= 1 && n <= 4 ? n - 1 : n);
+      }
+      const chapName = (chapter || '').trim();
+      if (chapName && !chapNames.has(chapName)) {
+        chaps.push({ name: chapName, marks: 1 });
+        chapNames.add(chapName);
+      }
+      qs.push({ text: question, options: [o1, o2, o3, o4], correct: corr, chapter: chapName });
+      added++;
+    });
+    DB.setQuestions(_qbDept, _qbSubj, qs);
+    if (chaps.length) DB.setChapters(_qbDept, _qbSubj, chaps);
+    updateChapterDropdown();
+    renderQuestions(); updPoolBar(); renderChapters();
+    toast(`✅ Imported ${added} question(s).`);
+  };
+  reader.readAsText(file);
+}
+
+function downloadQuestionsCSVTemplate() {
+  const header = 'chapter,question,option1,option2,option3,option4,correct_index\n';
+  const sample = 'Basics,What is C?,A language,A game,A OS,A browser,0\n';
+  const blob = new Blob([header + sample], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'questions_template.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function updPoolBar() {
+  const cfg = _qbDept && _qbSubj ? DB.getPaperConfig(_qbDept, _qbSubj) : null;
+  const qsAll  = _qbDept && _qbSubj ? DB.getQuestions(_qbDept, _qbSubj) : [];
+  const qs  = filterPoolByChapters(qsAll, cfg);
+  const needed  = cfg?.qCount || 0;
+  const poolEl  = document.getElementById('poolCount');
+  const pickEl  = document.getElementById('poolPick');
+  const bar     = document.getElementById('poolBar');
+  const badge   = document.getElementById('qCntBadge');
+  if (poolEl) poolEl.textContent = qs.length;
+  if (pickEl) pickEl.textContent = needed;
+  if (bar)    bar.className = 'pool-bar' + (qs.length >= needed ? ' ok' : '');
+  if (badge)  {
+    const extra = (cfg && cfg.chaptersSelected && cfg.chaptersSelected.length) ? `/${qsAll.length}` : '';
+    badge.textContent = `Pool: ${qs.length}${extra} Q (Paper: ${needed})`;
+    badge.className = 'qcnt' + (qs.length >= needed ? ' full' : '');
+  }
+}
+
+function renderQuestions() {
+  const qs     = (_qbDept && _qbSubj) ? DB.getQuestions(_qbDept, _qbSubj) : [];
+  const chaps  = (_qbDept && _qbSubj) ? DB.getChapters(_qbDept, _qbSubj) : [];
+  const cfg    = (_qbDept && _qbSubj) ? DB.getPaperConfig(_qbDept, _qbSubj) : null;
+  const LTRS   = ['A', 'B', 'C', 'D'];
+  const list   = document.getElementById('qList'); if (!list) return;
+  updPoolBar();
+  if (!qs.length) {
+    list.innerHTML = `<div class="empty"><div class="ei">📋</div><div class="et">No questions in pool yet.</div></div>`;
+    return;
+  }
+  const chapMap = {}; chaps.forEach(c => chapMap[c.name] = c);
+  const totalChapMarks = chaps.reduce((a, c) => a + parseFloat(c.marks || 0), 0);
+  const byChap = {};
+  qs.forEach((q, i) => { const k = q.chapter || '__none__'; if (!byChap[k]) byChap[k] = []; byChap[k].push({ q, i }); });
+  let html = '';
+  const chapOrder = [...chaps.map(c => c.name), '__none__'];
+  chapOrder.forEach(chapName => {
+    const items = byChap[chapName]; if (!items || !items.length) return;
+    const label = chapName === '__none__' ? 'No Chapter Assigned' : chapName;
+    const chapInfo = chapMap[chapName];
+    const needed = (chapInfo && totalChapMarks > 0 && cfg)
+      ? Math.round((parseFloat(chapInfo.marks || 0) / totalChapMarks) * cfg.qCount) : null;
+    html += `<div style="margin-bottom:1.2rem">
+      <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;padding:.4rem .8rem;background:${chapName === '__none__' ? 'var(--bg)' : 'var(--pri-lt)'};border-radius:8px;">
+        <span style="font-size:.78rem;font-weight:800;color:${chapName === '__none__' ? 'var(--mu)' : 'var(--pri)'}">📖 ${label}</span>
+        ${chapInfo ? `<span style="font-size:.7rem;color:var(--mu);margin-left:auto">${items.length} Q in pool · ${chapInfo.marks}M · needs ~${needed ?? '?'} Q</span>`
+          : `<span style="font-size:.7rem;color:var(--mu);margin-left:auto">${items.length} Q</span>`}
+      </div>
+      ${items.map(({ q, i }) => `
+        <div class="q-item">
+          <div class="qi-num">${i + 1}</div>
+          <div class="qi-body">
+            <div class="qi-text">${q.text}</div>
+            <div class="qi-opts">${q.options.map((o, j) =>
+              `<span class="qi-chip${j === q.correct ? ' correct' : ''}">${LTRS[j]}: ${o}</span>`).join('')}</div>
+          </div>
+          <div class="qi-actions">
+            <button class="btn-icon" onclick="openEditQ(${i})" title="Edit">✏️</button>
+            <button class="btn-icon" onclick="deleteQ(${i})" title="Delete">🗑️</button>
+          </div>
+        </div>`).join('')}
+    </div>`;
+  });
+  list.innerHTML = html;
+}
+
+/* ════════════════════════════════════════
+   CHAPTERS — per paper
+════════════════════════════════════════ */
+let _chapDept = '', _chapSubj = '';
+function chapSubjPopulate(dept) {
+  dept = dept || document.getElementById('chapDeptSel').value;
+  _chapDept = dept;
+  const sel = document.getElementById('chapSubjSel'); sel.innerHTML = '<option value="">— Subject —</option>';
+  if (!dept) return;
+  const cfgs = DB.getAllPaperConfigs();
+  Object.keys(cfgs).filter(k => k.startsWith(dept + '::')).forEach(k => {
+    const subj = k.split('::')[1];
+    const o = document.createElement('option'); o.value = subj; o.textContent = subj; sel.appendChild(o);
+  });
+}
+function loadChaptersForPaper() {
+  _chapDept = document.getElementById('chapDeptSel').value;
+  _chapSubj = document.getElementById('chapSubjSel').value;
+  renderChapters();
+}
+function addChapter() {
+  if (!_chapDept || !_chapSubj) { toast('⚠️ Select a paper first (Dept + Subject).'); return; }
+  const chaps = DB.getChapters(_chapDept, _chapSubj);
+  chaps.push({ name: `Chapter ${chaps.length + 1}`, marks: 10 });
+  DB.setChapters(_chapDept, _chapSubj, chaps);
+  renderChapters();
+}
+function renderChapters() {
+  const chaps = (_chapDept && _chapSubj) ? DB.getChapters(_chapDept, _chapSubj) : [];
+  const cfg   = (_chapDept && _chapSubj) ? DB.getPaperConfig(_chapDept, _chapSubj) : null;
+  const qs    = (_chapDept && _chapSubj) ? DB.getQuestions(_chapDept, _chapSubj) : [];
+  const qCount = cfg?.qCount || 0; const mpq = cfg?.marksPerQ || 1;
+  const list  = document.getElementById('chapList'); if (!list) return;
+  const totalChapMarks = chaps.reduce((a, c) => a + parseFloat(c.marks || 0), 0);
+  if (!chaps.length) {
+    list.innerHTML = `<div class="empty" style="padding:1.5rem"><div class="ei">📖</div><div class="et">${_chapDept && _chapSubj ? 'No chapters. Click "+ Add Chapter".' : 'Select a paper above.'}</div></div>`;
+    document.getElementById('chapTotalBar').style.display = 'none';
+    document.getElementById('chapWarn').style.display = 'none';
+    if (_chapDept && _chapSubj) updateChapterDropdown();
+    return;
+  }
+  chaps.forEach(c => {
+    const ratio = totalChapMarks > 0 ? parseFloat(c.marks || 0) / totalChapMarks : 0;
+    c._needed = Math.round(ratio * qCount);
+    c._pool   = qs.filter(q => q.chapter === c.name).length;
+  });
+  list.innerHTML = chaps.map((c, i) => `
+    <div class="chap-row">
+      <div class="chap-num">${i + 1}</div>
+      <input class="chap-name-inp" type="text" value="${c.name.replace(/"/g, '&quot;')}"
+        onchange="updateChapField(${i},'name',this.value)" placeholder="Chapter name"/>
+      <div style="font-size:.72rem;color:var(--mu);white-space:nowrap">Marks:</div>
+      <input class="chap-marks-inp" type="number" value="${c.marks}" min="0.5" step="0.5"
+        onchange="updateChapField(${i},'marks',parseFloat(this.value)||0)" oninput="liveChapCalc()"/>
+      <div class="chap-q-disp${c._needed > 0 ? ' has' : ''}">~${c._needed || 0} Q</div>
+      <div style="font-size:.7rem;color:${c._pool >= c._needed ? 'var(--ok)' : 'var(--ora)'};font-weight:700;white-space:nowrap">pool: ${c._pool}</div>
+      <button class="chap-del" onclick="deleteChapter(${i})">✕</button>
+    </div>`).join('');
+  document.getElementById('chapTotalBar').style.display = 'flex';
+  document.getElementById('chapTotalMrk').textContent   = Math.round(totalChapMarks * 100) / 100;
+  document.getElementById('chapTotalQ').textContent     = qCount;
+  document.getElementById('chapTotalMpq').textContent   = mpq;
+  document.getElementById('chapTotalPaper').textContent = Math.round(qCount * mpq * 100) / 100;
+  const paperMarks = qCount * mpq;
+  const warn = document.getElementById('chapWarn');
+  if (totalChapMarks > 0 && Math.abs(totalChapMarks - paperMarks) > 0.01) {
+    warn.style.display = 'block';
+    warn.textContent = `⚠️ Chapter marks (${Math.round(totalChapMarks * 100) / 100}) ≠ Paper marks (${paperMarks}). Questions picked proportionally.`;
+  } else warn.style.display = 'none';
+  updateChapterDropdown();
+  renderPaperChapterSelect();
+}
+function liveChapCalc() {
+  const inputs = document.querySelectorAll('.chap-marks-inp');
+  const vals   = [...inputs].map(x => parseFloat(x.value) || 0);
+  const total  = vals.reduce((a, b) => a + b, 0);
+  const cfg    = (_chapDept && _chapSubj) ? DB.getPaperConfig(_chapDept, _chapSubj) : null;
+  const qCount = cfg?.qCount || 0;
+  document.querySelectorAll('.chap-q-disp').forEach((el, i) => {
+    const needed = total > 0 ? Math.round((vals[i] / total) * qCount) : 0;
+    el.textContent = `~${needed} Q`; el.className = 'chap-q-disp' + (needed > 0 ? ' has' : '');
+  });
+  const tot = document.getElementById('chapTotalMrk');
+  if (tot) tot.textContent = Math.round(total * 100) / 100;
+}
+function updateChapField(i, field, val) {
+  const chaps = DB.getChapters(_chapDept, _chapSubj);
+  if (chaps[i]) chaps[i][field] = val;
+  DB.setChapters(_chapDept, _chapSubj, chaps);
+  renderChapters();
+}
+function deleteChapter(i) {
+  const chaps = DB.getChapters(_chapDept, _chapSubj);
+  chaps.splice(i, 1); DB.setChapters(_chapDept, _chapSubj, chaps);
+  renderChapters(); toast('🗑 Chapter removed.');
+}
+function saveChapters() {
+  const chaps = DB.getChapters(_chapDept, _chapSubj);
+  document.querySelectorAll('.chap-name-inp').forEach((el, i) => { if (chaps[i]) chaps[i].name = el.value.trim() || `Chapter ${i + 1}`; });
+  document.querySelectorAll('.chap-marks-inp').forEach((el, i) => { if (chaps[i]) chaps[i].marks = parseFloat(el.value) || 0; });
+  DB.setChapters(_chapDept, _chapSubj, chaps);
+  renderChapters(); updateChapterDropdown(); toast('✅ Chapters saved!');
+}
+function clearChapters() {
+  if (!confirm('Remove all chapters for this paper?')) return;
+  DB.setChapters(_chapDept, _chapSubj, []);
+  renderChapters(); toast('🗑 Cleared.');
+}
+function updateChapterDropdown() {
+  const chaps = (_qbDept && _qbSubj) ? DB.getChapters(_qbDept, _qbSubj) : [];
+  const sel = document.getElementById('qChapter'); if (!sel) return;
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">— No Chapter —</option>';
+  chaps.forEach(c => {
+    const o = document.createElement('option'); o.value = c.name; o.textContent = c.name;
+    if (c.name === cur) o.selected = true; sel.appendChild(o);
+  });
+}
+
+/* ════════════════════════════════════════
+   SCHEDULE
+════════════════════════════════════════ */
+function openAddSchedule() {
+  document.getElementById('schedModalTitle').textContent = '📅 Schedule Exam';
+  document.getElementById('schedEditId').value = '';
+  document.getElementById('schedDept').value = '';
+  document.getElementById('schedSubj').innerHTML = '<option value="">— Subject —</option>';
+  document.getElementById('schedYear').value = '';
+  document.getElementById('schedSection').value = '';
+  document.getElementById('schedTitle').value = '';
+  document.getElementById('schedStart').value = '';
+  document.getElementById('schedEnd').value = '';
+  document.getElementById('schedPaperInfo').style.display = 'none';
+  openM('m-schedule');
+}
+function openEditSchedule(id) {
+  const sc = DB.schedules.find(s => s.id === id); if (!sc) return;
+  document.getElementById('schedModalTitle').textContent = '✏️ Edit Schedule';
+  document.getElementById('schedEditId').value = id;
+  document.getElementById('schedDept').value  = sc.dept;
+  loadSchedSubjects();
+  setTimeout(() => {
+    document.getElementById('schedSubj').value    = sc.subject;
+    document.getElementById('schedYear').value    = sc.year || '';
+    document.getElementById('schedSection').value = sc.section || '';
+    document.getElementById('schedTitle').value   = sc.title || '';
+    // format for datetime-local
+    const toLocal = dt => new Date(dt).toISOString().slice(0, 16);
+    document.getElementById('schedStart').value = toLocal(sc.startTime);
+    document.getElementById('schedEnd').value   = toLocal(sc.endTime);
+    showSchedPaperInfo(sc.dept, sc.subject);
+  }, 40);
+  openM('m-schedule');
+}
+function loadSchedSubjects() {
+  const dept = document.getElementById('schedDept').value;
+  const sel  = document.getElementById('schedSubj');
+  sel.innerHTML = '<option value="">— Subject —</option>';
+  if (!dept) return;
+  const cfgs = DB.getAllPaperConfigs();
+  Object.keys(cfgs).filter(k => k.startsWith(dept + '::')).forEach(k => {
+    const subj = k.split('::')[1];
+    const o = document.createElement('option'); o.value = subj; o.textContent = subj; sel.appendChild(o);
+  });
+  sel.onchange = () => showSchedPaperInfo(dept, sel.value);
+}
+function showSchedPaperInfo(dept, subj) {
+  const info = document.getElementById('schedPaperInfo');
+  if (!dept || !subj) { info.style.display = 'none'; return; }
+  const cfg   = DB.getPaperConfig(dept, subj);
+  const pool  = DB.getQuestions(dept, subj).length;
+  if (!cfg) { info.style.display = 'none'; return; }
+  info.style.display = 'block';
+  info.innerHTML = `📄 ${cfg.qCount}Q · ${cfg.qCount * cfg.marksPerQ}M · ${cfg.duration}min · Pool: ${pool}/${cfg.qCount} questions ${pool >= cfg.qCount ? '✅ Ready' : '⚠️ Not enough questions'}`;
+}
+function saveSchedule() {
+  const dept    = document.getElementById('schedDept').value;
+  const subj    = document.getElementById('schedSubj').value;
+  const year    = document.getElementById('schedYear').value;
+  const section = document.getElementById('schedSection').value.trim();
+  const title   = document.getElementById('schedTitle').value.trim();
+  const start   = document.getElementById('schedStart').value;
+  const end     = document.getElementById('schedEnd').value;
+  if (!dept || !subj) { toast('⚠️ Select dept and subject.'); return; }
+  if (!start || !end)  { toast('⚠️ Set start and end time.'); return; }
+  if (new Date(start) >= new Date(end)) { toast('⚠️ End time must be after start.'); return; }
+  const editId = document.getElementById('schedEditId').value;
+  const cfg    = DB.getPaperConfig(dept, subj);
+  const scheds = DB.schedules;
+  const sc = {
+    id: editId || uid(),
+    dept, subject: subj, year, section,
+    title: title || cfg?.title || `${subj} — ${dept}`,
+    startTime: new Date(start).toISOString(),
+    endTime:   new Date(end).toISOString(),
+    createdAt: new Date().toLocaleString('en-IN'),
+  };
+  if (editId) {
+    const idx = scheds.findIndex(s => s.id === editId);
+    if (idx >= 0) scheds[idx] = sc; else scheds.push(sc);
+  } else {
+    scheds.push(sc);
+  }
+  DB.schedules = scheds;
+  closeM('m-schedule'); renderSchedules(); renderPaperBank();
+  toast(`✅ Exam scheduled!`);
+}
+function deleteSchedule(id) {
+  if (!confirm('Delete this schedule?')) return;
+  DB.schedules = DB.schedules.filter(s => s.id !== id);
+  renderSchedules(); toast('🗑 Schedule deleted.');
+}
+function renderSchedules() {
+  const deptF   = document.getElementById('schedDeptFilter')?.value || '';
+  const statusF = document.getElementById('schedStatusFilter')?.value || '';
+  let scheds = DB.schedules;
+  if (deptF)   scheds = scheds.filter(s => s.dept === deptF);
+  if (statusF) scheds = scheds.filter(s => getScheduleStatus(s) === statusF);
+  const grid = document.getElementById('schedGrid'); if (!grid) return;
+  if (!scheds.length) {
+    grid.innerHTML = `<div class="empty" style="grid-column:1/-1"><div class="ei">📅</div><div class="et">No schedules yet. Click "+ Schedule Exam" to add one.</div></div>`;
+    return;
+  }
+  grid.innerHTML = scheds.map(sc => {
+    const status  = getScheduleStatus(sc);
+    const sClass  = status === 'active' ? 'active-sched' : status === 'expired' ? 'expired-sched' : '';
+    const sBadge  = status === 'active'   ? '<span class="sched-status ss-active">🟢 Live Now</span>'
+                  : status === 'upcoming' ? '<span class="sched-status ss-upcoming">🔵 Upcoming</span>'
+                  :                        '<span class="sched-status ss-expired">⚫ Expired</span>';
+    const cfg = DB.getPaperConfig(sc.dept, sc.subject);
+    const attempts = DB.results.filter(r => r.scheduleId === sc.id).length;
+    return `
+      <div class="sched-card ${sClass}">
+        ${sBadge}
+        <div class="sched-title">${sc.title}</div>
+        <div class="sched-sub">${sc.dept}</div>
+        <div class="sched-meta">
+          <span>📚 ${sc.subject}</span>
+          <span>🎓 ${sc.year || 'All Years'}${sc.section ? ' · Sec ' + sc.section : ''}</span>
+          <span>🕐 Start: ${new Date(sc.startTime).toLocaleString('en-IN')}</span>
+          <span>🕕 End: ${new Date(sc.endTime).toLocaleString('en-IN')}</span>
+          ${cfg ? `<span>📄 ${cfg.qCount}Q · ${cfg.qCount * cfg.marksPerQ}M · ${cfg.duration}min</span>` : ''}
+          <span>✍️ ${attempts} attempt(s)</span>
+        </div>
+        <div class="sched-actions">
+          <button class="btn btn-ghost btn-sm" onclick="openEditSchedule('${sc.id}')">✏️ Edit</button>
+          <button class="btn btn-red btn-sm" onclick="deleteSchedule('${sc.id}')">🗑</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+/* ════════════════════════════════════════
+   EXAM ENGINE
+════════════════════════════════════════ */
+let eQuestions = [], eAnswers = [], eCur = 0, eTimerInt = null, eStart = null, eRem = 0;
+let examActive = false, cheatTriggered = false;
+let currentExamScheduleId = null;
+let _examCfg = null;
+let _sessionLastSavedAt = 0;
+
+function saveExamSession() {
+  if (!currentStudent || !currentExamScheduleId || !examActive) return;
+  _sessionLastSavedAt = Date.now();
+  DB.setExamSession(currentStudent.enroll, currentExamScheduleId, {
+    questions: eQuestions,
+    answers: eAnswers,
+    cur: eCur,
+    rem: eRem,
+    startAt: eStart,
+    savedAt: _sessionLastSavedAt,
+    cfg: _examCfg,
+    subject: currentStudent.subject
+  });
+}
+function clearExamSession() {
+  if (!currentStudent || !currentExamScheduleId) return;
+  DB.clearExamSession(currentStudent.enroll, currentExamScheduleId);
+}
+
+function startExam(cfg, pool, savedSession = null) {
+  _examCfg = cfg;
+  if (savedSession && savedSession.questions && savedSession.answers) {
+    eQuestions = savedSession.questions;
+    eAnswers = savedSession.answers;
+    eCur = savedSession.cur || 0;
+    const elapsed = Math.floor((Date.now() - (savedSession.savedAt || Date.now())) / 1000);
+    eRem = Math.max(0, (savedSession.rem || 0) - elapsed);
+    eStart = savedSession.startAt || Date.now();
+    if (eRem <= 0) {
+      clearExamSession();
+      toast('⚠️ Saved exam session expired. Time is over.');
+      return;
+    }
+  } else {
+    const chaps    = getAllowedChapters(cfg, currentStudent.branch, currentStudent.subject);
+    const ppool    = filterPoolByChapters(pool, cfg);
+    const selected = pickQuestionsFromPool(ppool, cfg.qCount, chaps);
+    const ordered  = cfg.shuffle ? shuffle(selected) : [...selected];
+    eQuestions = ordered.map(q => {
+      if (!cfg.shuffleOpts) return { ...q, options: [...q.options] };
+      const indexed  = q.options.map((o, i) => ({ text: o, isCorrect: i === q.correct }));
+      const so       = shuffle(indexed);
+      return { text: q.text, options: so.map(o => o.text), correct: so.findIndex(o => o.isCorrect), chapter: q.chapter || '' };
+    });
+    eAnswers  = new Array(eQuestions.length).fill(null);
+    eCur      = 0;
+    eRem      = (cfg.duration || 60) * 60;
+    eStart    = Date.now();
+  }
+  cheatTriggered = false;
+  examActive     = true;
+  document.getElementById('ePName').textContent = cfg.title || 'Examination';
+  document.getElementById('eSInfo').textContent =
+    `${currentStudent.name} · ${currentStudent.enroll} · ${currentStudent.branch} · ${currentStudent.year} · ${currentStudent.subject}`;
+  buildSB(); renderQ(); startTimer();
+  showS('s-exam');
+  attachAntiCheat();
+  saveExamSession();
+}
+
+/* Anti-cheat */
+function attachAntiCheat() {
+  document.addEventListener('visibilitychange', onVisibilityChange);
+  window.addEventListener('blur', onWindowBlur);
+}
+function detachAntiCheat() {
+  document.removeEventListener('visibilitychange', onVisibilityChange);
+  window.removeEventListener('blur', onWindowBlur);
+}
+function onVisibilityChange() { if (!examActive || cheatTriggered) return; if (document.hidden) triggerCheat(); }
+function onWindowBlur() {
+  if (!examActive || cheatTriggered) return;
+  setTimeout(() => { if (!examActive || cheatTriggered) return; if (document.hidden) triggerCheat(); }, 200);
+}
+function triggerCheat() {
+  cheatTriggered = true; examActive = false;
+  clearInterval(eTimerInt);
+  detachAntiCheat();
+  clearExamSession();
+  document.getElementById('cheatOverlay').classList.add('show');
+  setTimeout(() => {
+    submitExam('Tab switch violation — auto-submitted');
+    setTimeout(() => { document.getElementById('cheatOverlay').classList.remove('show'); }, 2000);
+  }, 2200);
+}
+
+function startTimer() {
+  clearInterval(eTimerInt); updTimer();
+  eTimerInt = setInterval(() => {
+    eRem--; updTimer();
+    saveExamSession();
+    if (eRem <= 0)  { clearInterval(eTimerInt); examActive = false; detachAntiCheat(); toast('⏰ Time up!'); setTimeout(() => submitExam('Time up — auto-submitted'), 700); }
+    if (eRem === 300) toast('⚠️ 5 min left!');
+    if (eRem === 60)  toast('🔴 1 min left!');
+  }, 1000);
+}
+function updTimer() {
+  const m = Math.floor(eRem / 60).toString().padStart(2, '0');
+  const s = (eRem % 60).toString().padStart(2, '0');
+  const el = document.getElementById('eTimer');
+  el.textContent = `${m}:${s}`; el.className = 'etimer' + (eRem <= 120 ? ' danger' : '');
+}
+function buildSB() {
+  const g = document.getElementById('sideGrid'); g.innerHTML = '';
+  eQuestions.forEach((_, i) => {
+    const b = document.createElement('button'); b.className = 'qdot'; b.textContent = i + 1; b.id = `qd${i}`;
+    b.onclick = () => { eCur = i; renderQ(); }; g.appendChild(b);
+  }); updSB();
+}
+function updSB() {
+  eQuestions.forEach((_, i) => {
+    const d = document.getElementById(`qd${i}`); if (!d) return;
+    d.className = 'qdot' + (i === eCur ? ' cur' : '') + (eAnswers[i] !== null ? ' ans' : '');
+  });
+  const done = eAnswers.filter(a => a !== null).length;
+  document.getElementById('eProg').style.width = `${(done / eQuestions.length) * 100}%`;
+}
+function renderQ() {
+  const q = eQuestions[eCur]; const cfg = _examCfg; const LTRS = ['A', 'B', 'C', 'D'];
+  document.getElementById('qCon').innerHTML = `
+    <div class="qcard">
+      <div class="qtag">Question ${eCur + 1} of ${eQuestions.length}
+        <span class="qmbadge">${cfg?.marksPerQ || 1} Mark</span>
+        ${q.chapter ? `<span class="qmbadge" style="background:var(--ora-lt);color:var(--ora)">${q.chapter}</span>` : ''}
+      </div>
+      <div class="qtext">${eCur + 1}. ${q.text}</div>
+      <div class="opts" id="oList"></div>
+    </div>`;
+  const ol = document.getElementById('oList');
+  q.options.forEach((opt, i) => {
+    const d = document.createElement('div'); d.className = 'opt' + (eAnswers[eCur] === i ? ' sel' : '');
+    d.innerHTML = `<span class="oltr">${LTRS[i]}</span><span class="otext">${opt}</span>`;
+    d.onclick = () => pickOpt(i); ol.appendChild(d);
+  });
+  document.getElementById('bPrev').disabled = eCur === 0;
+  document.getElementById('bNext').disabled = eCur === eQuestions.length - 1;
+  updSB();
+}
+function pickOpt(i) {
+  eAnswers[eCur] = i;
+  document.querySelectorAll('.opt').forEach((el, idx) => el.classList.toggle('sel', idx === i)); updSB();
+  saveExamSession();
+}
+function eNav(dir) { const n = eCur + dir; if (n < 0 || n >= eQuestions.length) return; eCur = n; renderQ(); saveExamSession(); }
+function openSubmitM() {
+  document.getElementById('ansCnt').textContent = eAnswers.filter(a => a !== null).length;
+  document.getElementById('totCnt').textContent = eQuestions.length;
+  openM('m-submit');
+}
+function confirmSubmit() {
+  examActive = false; detachAntiCheat(); cheatTriggered = false;
+  closeM('m-submit'); clearInterval(eTimerInt);
+  submitExam();
+}
+function submitExam(note = '') {
+  const timeTaken = Math.floor((Date.now() - eStart) / 1000);
+  const cfg = _examCfg;
+  const mpq = parseFloat(cfg?.marksPerQ) || 1;
+  const tot = eQuestions.length * mpq;
+  let correct = 0, wrong = 0, skipped = 0;
+  eQuestions.forEach((q, i) => {
+    if (eAnswers[i] === null) skipped++;
+    else if (eAnswers[i] === q.correct) correct++;
+    else wrong++;
+  });
+  let marks = correct * mpq;
+  if (cfg?.negative) marks = Math.max(0, marks - wrong * 0.25 * mpq);
+  marks = Math.round(marks * 100) / 100;
+  const pct   = Math.round(tot > 0 ? (marks / tot) * 100 : 0);
+  const pp    = cfg?.passPct || 40;
+  const grade = calcGrade(pct, pp);
+  const res = {
+    ...currentStudent,
+    subject:    currentStudent.subject,
+    scheduleId: currentExamScheduleId,
+    score: pct, marks, totalMarks: tot, correct, wrong, skipped, grade,
+    timeTaken: fmtTime(timeTaken),
+    submittedAt: new Date().toLocaleString('en-IN'),
+    note: note || '',
+  };
+  const results = DB.results; results.push(res); DB.results = results;
+  clearExamSession();
+  showResultAfterSubmit(pct, correct, wrong, skipped, marks, tot);
+}
+function showResultAfterSubmit(pct, correct, wrong, skipped, marks, tot) {
+  showS('s-result');
+  const circ = document.getElementById('rcF');
+  circ.style.stroke = pct >= 80 ? 'var(--ok)' : pct >= 60 ? 'var(--pri)' : pct >= 40 ? 'var(--ora)' : 'var(--red)';
+  setTimeout(() => { circ.style.strokeDashoffset = 263.9 - (263.9 * (pct / 100)); }, 120);
+  let n = 0; const el = document.getElementById('rPct');
+  const iv = setInterval(() => { n = Math.min(n + 2, pct); el.textContent = n + '%'; if (n >= pct) clearInterval(iv); }, 18);
+  const cfg = _examCfg;
+  document.getElementById('rTit').textContent =
+    pct === 100 ? '🏆 Perfect!' : pct >= 80 ? '🎉 Excellent!' : pct >= 60 ? '👍 Good Job!' : pct >= (cfg?.passPct || 40) ? '📚 Passed!' : '💪 Better Luck Next Time';
+  document.getElementById('rDet').textContent   = `Scored ${marks}/${tot} marks (${pct}%). Result saved.`;
+  document.getElementById('rC').textContent     = correct;
+  document.getElementById('rW').textContent     = wrong;
+  document.getElementById('rS').textContent     = skipped;
+}
+
+/* ══ FACULTY MANAGEMENT
+════════════════════════════════════════ */
+function openAddSubAdmin() {
+  document.getElementById('subAdminEditId').value = '';
+  document.getElementById('subAdminName').value = '';
+  document.getElementById('subAdminIdModal').value = '';
+  document.getElementById('subAdminPassModal').value = '';
+  document.getElementById('subAdminSubjects').value = '';
+  document.getElementById('subAdminCode').value = genSixDigitCode();
+  document.querySelectorAll('#subAdminDeptChecks input').forEach(c => c.checked = false);
+  openM('m-subadmin');
+}
+function openEditSubAdmin(id) {
+  const sa = DB.faculty.find(x => x.id === id && x.role === 'Sub-Admin'); if (!sa) return;
+  document.getElementById('subAdminEditId').value = id;
+  document.getElementById('subAdminName').value = sa.name || '';
+  document.getElementById('subAdminIdModal').value = sa.id || '';
+  document.getElementById('subAdminPassModal').value = sa.password || '';
+  document.getElementById('subAdminSubjects').value = (sa.subjects || []).join(', ');
+  document.getElementById('subAdminCode').value = sa.code || genSixDigitCode();
+  document.querySelectorAll('#subAdminDeptChecks input').forEach(c => c.checked = (sa.depts || []).includes(c.value));
+  openM('m-subadmin');
+}
+function genSubAdminId() {
+  const ids = new Set(DB.faculty.map(f => String(f.id || '').toUpperCase()));
+  let n = 1;
+  let candidate = `SUB${String(n).padStart(3, '0')}`;
+  while (ids.has(candidate)) {
+    n++;
+    candidate = `SUB${String(n).padStart(3, '0')}`;
+  }
+  return candidate;
+}
+function saveSubAdmin() {
+  const nameInput = document.getElementById('subAdminName');
+  const idInput = document.getElementById('subAdminIdModal');
+  const passInput = document.getElementById('subAdminPassModal');
+  const nameRaw = (nameInput?.value || '').trim();
+  const idRaw = (idInput?.value || '').trim().toUpperCase();
+  const pass = (passInput?.value || '').trim();
+  const id = idRaw || genSubAdminId();
+  const name = nameRaw || `Sub-Admin ${id}`;
+  const code = document.getElementById('subAdminCode').value.trim() || genSixDigitCode();
+  const depts = [...document.querySelectorAll('#subAdminDeptChecks input:checked')].map(c => c.value);
+  const subjStr = document.getElementById('subAdminSubjects').value.trim();
+  const subjects = subjStr ? subjStr.split(',').map(s => s.trim()).filter(Boolean) : [];
+  const editId = document.getElementById('subAdminEditId').value;
+  if (idInput && !idRaw) idInput.value = id;
+  if (nameInput && !nameRaw) nameInput.value = name;
+  if (!pass) { toast('⚠️ Fill password.'); return; }
+  if (!/^\d{6}$/.test(code)) { toast('⚠️ Sub-admin code must be 6 digits.'); return; }
+  if (!depts.length) { toast('⚠️ Select at least one department.'); return; }
+
+  const facs = DB.faculty;
+  const existsConflict = facs.some(f => f.id === id && f.id !== editId);
+  if (existsConflict) { toast('⚠️ ID already exists.'); return; }
+
+  const payload = { name, id, password: pass, role: 'Sub-Admin', code, depts, subjects };
+  if (editId) {
+    const idx = facs.findIndex(f => f.id === editId);
+    if (idx >= 0) facs[idx] = payload;
+  } else {
+    facs.push(payload);
+  }
+  DB.faculty = facs;
+  closeM('m-subadmin');
+  renderFaculty();
+  toast(`✅ Sub-Admin "${name}" saved!`);
+}
+function openAddFaculty() {
+  document.getElementById('facModalTitle').textContent = '➕ Add Faculty';
+  document.getElementById('facEditId').value = '';
+  ['facName', 'facId', 'facPass', 'facSubjects'].forEach(id => document.getElementById(id).value = '');
+  document.querySelectorAll('#facDeptChecks input').forEach(c => c.checked = false);
+  openM('m-faculty');
+}
+function openEditFaculty(id) {
+  const f = DB.faculty.find(x => x.id === id); if (!f) return;
+  document.getElementById('facModalTitle').textContent = '✏️ Edit Faculty';
+  document.getElementById('facEditId').value   = id;
+  document.getElementById('facName').value     = f.name;
+  document.getElementById('facId').value       = f.id;
+  document.getElementById('facPass').value     = f.password;
+  document.getElementById('facSubjects').value = (f.subjects || []).join(', ');
+  document.querySelectorAll('#facDeptChecks input').forEach(c => c.checked = (f.depts || []).includes(c.value));
+  openM('m-faculty');
+}
+function saveFaculty() {
+  const name    = document.getElementById('facName').value.trim();
+  const id      = document.getElementById('facId').value.trim();
+  const pass    = document.getElementById('facPass').value.trim();
+  const depts   = [...document.querySelectorAll('#facDeptChecks input:checked')].map(c => c.value);
+  const subjStr = document.getElementById('facSubjects').value.trim();
+  const subjects = subjStr ? subjStr.split(',').map(s => s.trim()).filter(Boolean) : [];
+  if (!name || !id || !pass) { toast('⚠️ Fill name, ID and password.'); return; }
+  if (!depts.length) { toast('⚠️ Select at least one department.'); return; }
+  const facs   = DB.faculty;
+  const editId = document.getElementById('facEditId').value;
+  const role = 'Faculty';
+  if (editId) {
+    const idx = facs.findIndex(f => f.id === editId);
+    if (idx >= 0) facs[idx] = { ...facs[idx], name, id, password: pass, role, depts, subjects };
+  } else {
+    if (facs.find(f => f.id === id)) { toast('⚠️ Faculty ID already exists.'); return; }
+    facs.push({ name, id, password: pass, role, depts, subjects });
+  }
+  DB.faculty = facs; closeM('m-faculty'); renderFaculty(); toast(`✅ Faculty "${name}" saved!`);
+}
+function deleteFaculty(id) {
+  if (!confirm('Delete faculty?')) return;
+  DB.faculty = DB.faculty.filter(f => f.id !== id); renderFaculty(); toast('🗑 Deleted.');
+}
+function renderFaculty() {
+  const search = (document.getElementById('facSearch')?.value || '').toLowerCase();
+  const deptF  = document.getElementById('facDeptFilter')?.value || '';
+  const facs   = DB.faculty.filter(f => {
+    if (deptF && !f.depts.includes(deptF)) return false;
+    if (search && !f.name.toLowerCase().includes(search) && !f.id.includes(search)) return false;
+    return true;
+  });
+  const tbody = document.getElementById('facTbody'); if (!tbody) return;
+  if (!facs.length) { tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:var(--mu);padding:2rem">No faculty accounts yet.</td></tr>`; return; }
+  tbody.innerHTML = facs.map((f, i) => `
+    <tr>
+      <td><span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--mu)">${i + 1}</span></td>
+      <td><strong>${f.name}</strong></td>
+      <td><span style="font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:700;color:var(--pur)">${f.id}</span></td>
+      <td><span style="font-family:'JetBrains Mono',monospace;font-size:.75rem">${f.password}</span></td>
+      <td><span class="badge ${f.role === 'Sub-Admin' ? 'badge-ok' : 'badge-pur'}">${f.role || 'Faculty'}</span></td>
+      <td>${(f.depts || []).map(d => `<span class="badge badge-pur" style="margin:.1rem">${d.split(' ')[0]}</span>`).join('')}</td>
+      <td style="font-size:.76rem;max-width:160px;overflow:hidden;text-overflow:ellipsis">${f.subjects && f.subjects.length ? f.subjects.join(', ') : '<span style="color:var(--mu)">All subjects</span>'}</td>
+      <td>
+        <button class="btn-icon" onclick="${f.role === 'Sub-Admin' ? `openEditSubAdmin('${f.id}')` : `openEditFaculty('${f.id}')`}" title="Edit">✏️</button>
+        <button class="btn-icon" onclick="deleteFaculty('${f.id}')" title="Delete">🗑️</button>
+      </td>
+    </tr>`).join('');
+}
+
+/* ══ STUDENT MANAGEMENT
+════════════════════════════════════════ */
+function openAddStudent() {
+  document.getElementById('stuModalTitle').textContent = '➕ Add Student';
+  document.getElementById('stuEditId').value = '';
+  ['stuMEnroll'].forEach(id => document.getElementById(id).value = '');
+  openM('m-student');
+}
+function openEditStudent(enroll) {
+  const s = DB.students.find(x => x.enroll === enroll); if (!s) return;
+  document.getElementById('stuModalTitle').textContent = '✏️ Edit Student';
+  document.getElementById('stuEditId').value   = enroll;  document.getElementById('stuMEnroll').value  = s.enroll;
+  document.getElementById('stuMYear').value    = s.year;
+  document.getElementById('stuMBranch').value  = s.branch;
+  openM('m-student');
+}
+function saveStudent() {
+  const enroll  = document.getElementById('stuMEnroll').value.trim();
+  const name    = enroll;
+  const section = '';
+  const year    = document.getElementById('stuMYear').value;
+  const branch  = document.getElementById('stuMBranch').value;
+  if (!enroll) { toast('⚠️ Fill all fields.'); return; }
+  const stus   = DB.students;
+  const editId = document.getElementById('stuEditId').value;
+  let password = genPassword();
+  let examCode = genUniqueStudentExamCode(editId || '');
+  if (editId) {
+    const idx = stus.findIndex(s => s.enroll === editId);
+    if (idx >= 0) {
+      const existingId = stus[idx].id;
+      password = stus[idx].password || password;
+      examCode = (stus[idx].examCode && /^\d{6}$/.test(stus[idx].examCode)) ? stus[idx].examCode : genUniqueStudentExamCode(editId);
+      stus[idx] = { ...stus[idx], id: existingId, name, enroll, password, examCode, section: stus[idx].section || '', year, branch };
+    }
+  } else {
+    if (stus.find(s => s.enroll === enroll)) { toast('⚠️ Enrollment already exists.'); return; }
+    stus.push({ id: nextStudentId(), name, enroll, password, examCode, section, year, branch });
+  }
+  DB.students = stus;
+  closeM('m-student');
+  renderStudents();
+  toast(`✅ Student "${name}" saved! Password: ${password} | Exam Code: ${examCode}`);
+}
+
+function uploadStudentsCSV() {
+  const file = document.getElementById('stuCsvFile')?.files?.[0];
+  if (!file) { toast('⚠️ Choose a CSV file.'); return; }
+  const reader = new FileReader();
+  reader.onload = () => {
+    const rows = parseCSV(String(reader.result || ''));
+    if (!rows.length) { toast('⚠️ CSV is empty.'); return; }
+    const header = rows[0].map(x => x.toLowerCase());
+    const hasHeader = header.includes('enrollment') || header.includes('year_sem') || header.includes('department');
+    const data = hasHeader ? rows.slice(1) : rows;
+    const stus = DB.students;
+    const existing = new Set(stus.map(s => s.enroll));
+    let added = 0;
+    let skipped = 0;
+    data.forEach(r => {
+      const enroll = (r[0] || '').trim();
+      const year   = (r[1] || '').trim();
+      const branch = (r[2] || '').trim();
+      const section = (r[3] || '').trim();
+      if (!enroll || !year || !branch) { skipped++; return; }
+      if (existing.has(enroll)) { skipped++; return; }
+      const password = genPassword();
+      const examCode = genUniqueStudentExamCode(enroll);
+      stus.push({ id: nextStudentId(), name: enroll, enroll, password, examCode, section, year, branch });
+      existing.add(enroll);
+      added++;
+    });
+    DB.students = stus;
+    renderStudents();
+    toast(`✅ Imported ${added} student(s). Skipped ${skipped}.`);
+  };
+  reader.readAsText(file);
+}
+
+function downloadStudentsCSVTemplate() {
+  const header = 'enrollment,year_sem,department,section\n';
+  const sample = '2023CS001,1st Year - Sem 1,Computer Engineering,A\n';
+  const blob = new Blob([header + sample], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'students_template.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+function deleteStudent(enroll) {
+  if (!confirm('Delete this student?')) return;
+  DB.students = DB.students.filter(s => s.enroll !== enroll); renderStudents(); toast('🗑 Deleted.');
+}
+function renderStudents() {
+  const search = (document.getElementById('stuSearch')?.value || '').toLowerCase();
+  const deptF  = document.getElementById('stuDeptFilter')?.value || '';
+  const yearF  = document.getElementById('stuYearFilter')?.value || '';
+  const stus   = DB.students.filter(s => {
+    if (deptF && s.branch !== deptF) return false;
+    if (yearF && !(String(s.year || '').startsWith(yearF))) return false;
+    if (search) {
+      const idStr = String(s.id || '');
+      if (!s.enroll.toLowerCase().includes(search) && !idStr.includes(search)) return false;
+    }
+    return true;
+  });
+  document.getElementById('stuCount').textContent = `${stus.length} of ${DB.students.length} students`;
+  const tbody = document.getElementById('stuTbody'); if (!tbody) return;
+  if (!stus.length) { tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--mu);padding:2rem">No students yet.</td></tr>`; return; }
+  tbody.innerHTML = stus.map((s, i) => `
+    <tr>
+      <td><span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--mu)">${i + 1}</span></td>
+      <td><span style="font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:700">${s.id || '-'}</span></td>
+      <td><span style="font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:700">${s.enroll}</span></td>
+      <td><span style="font-family:'JetBrains Mono',monospace;font-size:.75rem">${s.password}</span></td>
+      <td><span style="font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--ok);font-weight:700">${s.examCode || '-'}</span></td>
+      <td>${s.section}</td>
+      <td><span style="font-size:.76rem">${s.year}</span></td>
+      <td><span class="tag-dept ${DEPT_CODE[s.branch] || ''}">${s.branch.split(' ')[0]}</span></td>
+      <td>
+        <button class="btn-icon" onclick="openEditStudent('${s.enroll}')">✏️</button>
+        <button class="btn-icon" title="Reset Exam Session" onclick="resetStudentSessionsAdmin('${s.enroll}')">🔄</button>
+        <button class="btn-icon" onclick="deleteStudent('${s.enroll}')">🗑️</button>
+      </td>
+    </tr>`).join('');
+}
+
+function resetStudentSessionsAdmin(enroll) {
+  const stu = DB.students.find(s => s.enroll === enroll);
+  if (!stu) { toast('⚠️ Student not found.'); return; }
+  if (!confirm(`Reset all in-progress exam sessions for ${stu.name} (${enroll})?`)) return;
+
+  const all = DB.examSessions;
+  let removed = 0;
+  Object.keys(all).forEach(k => {
+    if (k.startsWith(`${enroll}::`)) { delete all[k]; removed++; }
+  });
+  DB.examSessions = all;
+
+  const removeRes = confirm('Also remove submitted results to allow reattempt?');
+  if (removeRes) {
+    DB.results = DB.results.filter(r => r.enroll !== enroll);
+    renderResults();
+    toast(`✅ Reset ${removed} session(s). Reattempt unlocked.`);
+  } else {
+    toast(`✅ Reset ${removed} in-progress session(s).`);
+  }
+}
+
+/* ══ RESULTS
+════════════════════════════════════════ */
+function getFilteredResults() {
+  const dept    = document.getElementById('pdfDept')?.value || '';
+  const subject = document.getElementById('pdfSubject')?.value || '';
+  return DB.results.filter(r => {
+    if (dept && r.branch !== dept) return false;
+    if (subject && r.subject !== subject) return false;
+    return true;
+  });
+}
+function renderResults() {
+  const res = getFilteredResults();
+  document.getElementById('resCnt').textContent = `${res.length} of ${DB.results.length}`;
+  const all    = DB.results;
+  const pp     = 40;
+  const passed = all.filter(r => r.score >= pp).length;
+  const avg    = all.length ? (all.reduce((a, r) => a + r.score, 0) / all.length).toFixed(1) : 0;
+  document.getElementById('statsMini').innerHTML = `
+    <div class="sm"><div class="sv">${all.length}</div><div class="sk">Submissions</div></div>
+    <div class="sm sm-ok"><div class="sv">${passed}</div><div class="sk">Passed</div></div>
+    <div class="sm sm-red"><div class="sv">${all.length - passed}</div><div class="sk">Failed</div></div>
+    <div class="sm sm-pri"><div class="sv">${avg}%</div><div class="sk">Avg Score</div></div>`;
+  renderResultsInto('resTbody', res);
+}
+function renderResultsInto(tbodyId, results) {
+  const tbody = document.getElementById(tbodyId); if (!tbody) return;
+  if (!results.length) { tbody.innerHTML = `<tr><td colspan="17" style="text-align:center;color:var(--mu);padding:2rem">No results found.</td></tr>`; return; }
+  tbody.innerHTML = results.map((r, i) => `
+    <tr>
+      <td><span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--mu)">${i + 1}</span></td>
+      <td><strong>${r.name}</strong></td>
+      <td><span style="font-family:'JetBrains Mono',monospace;font-size:.74rem">${r.enroll}</span></td>
+      <td>${r.section}</td><td>${r.branch}</td><td>${r.year}</td><td>${r.subject}</td>
+      <td><strong>${r.score}%</strong></td><td><strong>${r.marks}</strong></td><td>${r.totalMarks}</td>
+      <td style="color:var(--ok);font-weight:700">${r.correct}</td>
+      <td style="color:var(--red);font-weight:700">${r.wrong}</td>
+      <td style="color:var(--ora);font-weight:700">${r.skipped}</td>
+      <td><span class="gbadge g${r.grade}">${r.grade}</span></td>
+      <td><span style="font-family:'JetBrains Mono',monospace;font-size:.71rem">${r.timeTaken}</span></td>
+      <td style="font-size:.71rem;color:${r.note ? 'var(--red)' : 'var(--mu)'}">${r.note || '—'}</td>
+      <td style="font-size:.71rem;color:var(--mu)">${r.submittedAt}</td>
+    </tr>`).join('');
+}
+function clearResults() {
+  if (!confirm('Delete ALL results?')) return;
+  DB.results = []; renderResults(); toast('🗑 Results cleared.');
+}
+
+/* ══ EXCEL EXPORT
+════════════════════════════════════════ */
+function exportExcel(results, fname) {
+  if (!results || !results.length) { toast('⚠️ No results to export.'); return; }
+  const wb  = XLSX.utils.book_new();
+  const hdr = ['#', 'Name', 'Enrollment', 'Section', 'Department', 'Year/Sem', 'Subject',
+    'Score(%)', 'Marks', 'Total Marks', 'Correct', 'Wrong', 'Skipped', 'Grade', 'Time Taken', 'Note', 'Submitted At'];
+  const rows = results.map((r, i) => [i + 1, r.name, r.enroll, r.section, r.branch, r.year, r.subject,
+    r.score, r.marks, r.totalMarks, r.correct, r.wrong, r.skipped, r.grade, r.timeTaken, r.note || '', r.submittedAt]);
+  const ws  = XLSX.utils.aoa_to_sheet([hdr, ...rows]);
+  ws['!cols'] = [{ wch: 4 }, { wch: 22 }, { wch: 15 }, { wch: 9 }, { wch: 22 }, { wch: 14 }, { wch: 22 },
+    { wch: 9 }, { wch: 8 }, { wch: 10 }, { wch: 8 }, { wch: 7 }, { wch: 7 }, { wch: 7 }, { wch: 10 }, { wch: 24 }, { wch: 21 }];
+  XLSX.utils.book_append_sheet(wb, 'Results', ws);
+  // Summary
+  const all = results; const pp = 40; const pass = all.filter(r => r.score >= pp).length;
+  const avg = all.length ? (all.reduce((a, r) => a + r.score, 0) / all.length).toFixed(1) : 0;
+  const gs  = { A: 0, B: 0, C: 0, F: 0 }; all.forEach(r => { if (gs[r.grade] !== undefined) gs[r.grade]++; });
+  const sum = [['EXAM RESULT SUMMARY'], [],
+    ['Total Students', all.length], ['Passed', pass], ['Failed', all.length - pass],
+    ['Pass Rate', all.length ? `${((pass / all.length) * 100).toFixed(1)}%` : 'N/A'],
+    ['Average Score', `${avg}%`], [],
+    ['Grade A', gs.A], ['Grade B', gs.B], ['Grade C', gs.C], ['Grade F', gs.F], [],
+    ['Generated', new Date().toLocaleString('en-IN')]];
+  const ws2 = XLSX.utils.aoa_to_sheet(sum); ws2['!cols'] = [{ wch: 20 }, { wch: 20 }];
+  XLSX.utils.book_append_sheet(wb, 'Summary', ws2);
+  XLSX.writeFile(wb, `${fname || 'Results'}_${new Date().toISOString().slice(0, 10)}.xlsx`);
+  toast('📥 Excel downloaded!');
+}
+
+/* ══ SETTINGS
+════════════════════════════════════════ */
+function loadSettingsSubjects() {
+  const dept = document.getElementById('sSettDept')?.value; if (!dept) return;
+  renderSettingsSubTags(dept);
+}
+function renderSettingsSubTags(dept) {
+  const c = document.getElementById('sSubTags'); if (!c) return;
+  const subs = DB.getSubjects(dept);
+  c.innerHTML = subs.map((sub, i) =>
+    `<span class="sub-tag">${sub}<button class="rx" onclick="removeSubSettings(${i},'${dept}')">×</button></span>`
+  ).join('');
+}
+function addSubSettings() {
+  const dept = document.getElementById('sSettDept').value;
+  if (!dept) { toast('⚠️ Select a department first.'); return; }
+  const v = document.getElementById('sSubInp').value.trim(); if (!v) return;
+  const subs = DB.getSubjects(dept);
+  if (subs.includes(v)) { toast('Already exists.'); return; }
+  subs.push(v); DB.setSubjects(dept, subs);
+  document.getElementById('sSubInp').value = '';
+  renderSettingsSubTags(dept); toast(`✅ "${v}" added.`);
+}
+function removeSubSettings(i, dept) {
+  const subs = DB.getSubjects(dept); subs.splice(i, 1); DB.setSubjects(dept, subs);
+  renderSettingsSubTags(dept);
+}
+
+/* ══ TAB SWITCHING
+════════════════════════════════════════ */
+function swTab(tab, btn) {
+  document.querySelectorAll('.apanel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tbtn').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById(`tab-${tab}`);
+  if (panel) panel.classList.add('active');
+  if (btn)   btn.classList.add('active');
+  if (tab === 'results')  renderResults();
+  if (tab === 'faculty')  renderFaculty();
+  if (tab === 'students') renderStudents();
+  if (tab === 'papers')   renderPaperBank();
+  if (tab === 'schedule') renderSchedules();
+  if (tab === 'chapters') renderChapters();
+}
+
+/* ══ LOGOUT
+════════════════════════════════════════ */
+function logout() {
+  currentStudent = null; currentFaculty = null; currentExamScheduleId = null;
+  examActive = false; detachAntiCheat();
+  document.getElementById('aPass').value = '';
+  showS('s-land');
+}
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
